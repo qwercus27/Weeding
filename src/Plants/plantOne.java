@@ -14,7 +14,7 @@ public class plantOne extends Plant {
 		flower = sheet.getSprite(2, 0);
 		seeding = sheet.getSprite(3, 0);
 	
-		image = seed;
+		image = flower;
 		
 		growthStage = stage;
 		

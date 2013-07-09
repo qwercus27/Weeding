@@ -1,4 +1,4 @@
-package GameStates;
+package Weeding;
 
 public class TileSize {
 

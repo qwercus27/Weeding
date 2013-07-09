@@ -10,12 +10,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Maps.CurrentMap;
 import Maps.Map;
+import Maps.Plot0;
 import Plants.Plant;
-import Plants.plantTwo;
 import Weeding.Cursor;
 import Weeding.Player;
 import Weeding.Scaffold;
+import Weeding.TileSize;
 
 public class WeedingState extends BasicGameState {
 	
@@ -26,6 +28,7 @@ public class WeedingState extends BasicGameState {
 	private Cursor cursor;
 	private float pullTimer;
 	private boolean spaceRelease;
+	private CurrentMap currentMap;
 	
 	public WeedingState(int state) throws SlickException {
 		
@@ -44,23 +47,20 @@ public class WeedingState extends BasicGameState {
 		
 		spaceRelease = true;
 		
-		//scaffold = new Scaffold(16);
+		currentMap = new CurrentMap(gc);
 		
-	//	cursor = new Cursor();
 		
-		map = new Map(gc);
 		
-		Plant[] plantArray = map.getPlantArray();
 		
-	//	plantArray[4] = new plantTwo();
-		//plantArray[3] = new plantTwo();
+		
+
 	}
 
 	public void render(GameContainer gc, StateBasedGame sb, Graphics g)	throws SlickException {
 		
 		g.scale(gScale, gScale);
 	
-		
+		map = CurrentMap.getCurrentMap();
 		map.render(gc, g);
 	//	cursor.render(gc, g);
 		//scaffold.render(gc, g);

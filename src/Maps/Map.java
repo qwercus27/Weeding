@@ -7,24 +7,24 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import GameStates.TileSize;
 import Plants.Plant;
 import Plants.plantFour;
 import Plants.plantOne;
 import Plants.plantThree;
 import Plants.plantTwo;
 import Plants.plantZero;
+import Weeding.TileSize;
 
 
 public class Map {
 
 	Image tile;
 	int tileSize, gScale, tileTotal, columns, rows, x, y;
-	private ArrayList<Plant> plantList;
-	private Plant[] plantArray;
-	private Integer[] intArray;
-	private Random random;
+	protected Plant[] plantArray;
+	protected static ArrayList<Plant> speciesList;
+	protected Random random;
 	private Image background;
+	
 	
 	public Map(GameContainer gc) throws SlickException {
 		
@@ -46,15 +46,14 @@ public class Map {
 		
 		tileTotal = columns * rows;
 		
-		plantList = new ArrayList<Plant>();
-		
-		
 		plantArray = new Plant[tileTotal];
+		
+		speciesList = new ArrayList<Plant>();
 		
 		background = new Image("res/dirt.png", false, Image.FILTER_NEAREST);
 		
 		
-		for(int i = 0; i < (tileTotal - 15); i++){
+		/*for(int i = 0; i < (tileTotal - 15); i++){
 			int roll = random.nextInt(4);
 			int temp = random.nextInt(tileTotal);
 			if(roll == 0)plantArray[temp] = new plantZero();
@@ -66,7 +65,7 @@ public class Map {
 		
 		for(int i = 0; i < tileTotal; i++){
 			if(plantArray[i] == null)plantArray[i] = new plantOne(2);
-		}
+		}*/
 		
 		
 		
@@ -109,7 +108,6 @@ public class Map {
 	
 	public void update(int delta) throws SlickException {
 		
-		System.out.println(plantArray[1].getGrowthStage() + " " + plantArray[1].getGrowthTime() + " " + plantArray[1].getImage());
 		
 		for(int i = 0; i < tileTotal; i++)plantArray[i].update(delta);
 		
@@ -220,7 +218,7 @@ public class Map {
 								break;
 							case 3: plantArray[i + 1] = new plantThree(0);
 								break;
-							case 4: plantArray[i - columns] = new plantFour(0);
+							case 4: plantArray[i + 1] = new plantFour(0);
 								break;
 
 							default: plantArray[i + 1] = new plantZero();
@@ -271,5 +269,9 @@ public class Map {
 	public void setPlant(int arrayIndex, Plant plant){
 		
 		plantArray[arrayIndex] = plant;
+	}
+	
+	public static ArrayList<Plant> getSpecies(){
+		return speciesList;
 	}
 }

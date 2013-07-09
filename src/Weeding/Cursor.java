@@ -7,7 +7,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import GameStates.TileSize;
 
 public class Cursor {
 

@@ -6,7 +6,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-import GameStates.TileSize;
+import Weeding.TileSize;
+
 
 public class Plant {
 	
@@ -102,5 +103,7 @@ public class Plant {
 	public void setImage(Image i){
 		image = i;
 	}
+	
+	
 
 }
