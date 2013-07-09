@@ -3,9 +3,9 @@ package Plants;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class plantThree extends Plant {
+public class Spiderwort extends Plant {
 	
-	public plantThree(int stage) throws SlickException {
+	public Spiderwort(int stage) throws SlickException {
 		
 		plantNumber = 3;
 		

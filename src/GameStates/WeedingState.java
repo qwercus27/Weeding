@@ -5,6 +5,7 @@ package GameStates;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -12,7 +13,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import Maps.CurrentMap;
 import Maps.Map;
-import Maps.Plot0;
 import Plants.Plant;
 import Weeding.Cursor;
 import Weeding.Player;
@@ -29,6 +29,7 @@ public class WeedingState extends BasicGameState {
 	private float pullTimer;
 	private boolean spaceRelease;
 	private CurrentMap currentMap;
+	private Image plantFrame;
 	
 	public WeedingState(int state) throws SlickException {
 		
@@ -49,7 +50,9 @@ public class WeedingState extends BasicGameState {
 		
 		currentMap = new CurrentMap(gc);
 		
+		plantFrame = new Image("res/plantFrame.png", false, Image.FILTER_NEAREST);
 		
+		map = CurrentMap.getCurrentMap();
 		
 		
 		
@@ -62,9 +65,13 @@ public class WeedingState extends BasicGameState {
 	
 		map = CurrentMap.getCurrentMap();
 		map.render(gc, g);
-	//	cursor.render(gc, g);
-		//scaffold.render(gc, g);
 		player.render(gc, g);
+		
+		for(int i = 0; i < map.getSpecies().size(); i++){
+			
+			plantFrame.draw(6 + i * 24, 6);
+			map.getSpecies().get(i).getImage().draw(8 + i * 24, 8);
+		}
 		
 		
 	}
@@ -72,8 +79,7 @@ public class WeedingState extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sb, int delta)throws SlickException {
 		
 		player.update(gc, delta);
-		//scaffold.update(gc, delta);
-	//	cursor.update(gc, delta);
+	
 		map.update(delta);
 		
 		Input input = gc.getInput();
@@ -86,6 +92,7 @@ public class WeedingState extends BasicGameState {
 		int playerY = (Player.getY() - remY)/16;
 		int columns = map.getColumns();
 		
+		int buffer = TileSize.buffer;
 		
 		if(input.isKeyDown(Input.KEY_SPACE)){
 			
@@ -95,9 +102,9 @@ public class WeedingState extends BasicGameState {
 			
 			//add restriction for top and bottom of screen
 			
-			if(pullTimer > map.getPlantResistance(playerX - 1, playerY) ){
-				if(playerY > 0 && playerY <= map.getRows() && playerX >= 0 && playerX <= map.getColumns()){
-					map.removePlant(playerX -1, playerY);
+			if(pullTimer > map.getPlantResistance(playerX - buffer, playerY - buffer) ){
+				if(playerY > 0 && (playerY - buffer) <= map.getRows() && playerX >= 0 && (playerX - buffer) <= map.getColumns()){
+					map.removePlant(playerX - buffer, playerY - buffer);
 					pullTimer = 0;
 					spaceRelease = false;
 				}
@@ -112,6 +119,10 @@ public class WeedingState extends BasicGameState {
 		if(!input.isKeyDown(Input.KEY_SPACE)){
 			pullTimer = 0;
 			spaceRelease = true;
+		}
+		
+		if(input.isKeyPressed(Input.KEY_ESCAPE)){
+			sb.enterState(1);
 		}
 		
 	}

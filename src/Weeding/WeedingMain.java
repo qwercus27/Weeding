@@ -38,7 +38,7 @@ public class WeedingMain extends StateBasedGame {
 	public static void main(String[] args) throws SlickException, AWTException {
 		
 		AppGameContainer appgc = new AppGameContainer(new WeedingMain());
-		appgc.setDisplayMode(240 *  4, 160 * 4 , false);
+		appgc.setDisplayMode(272 *  4, 192 * 4 , false);
 		//appgc.setTargetFrameRate(60);
 		appgc.start();
 	}

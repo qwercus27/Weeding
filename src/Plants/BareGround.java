@@ -3,9 +3,9 @@ package Plants;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class plantZero extends Plant {
+public class BareGround extends Plant {
 	
-	public plantZero() throws SlickException {
+	public BareGround() throws SlickException {
 		
 		image = new Image("res/plant0.png", false, Image.FILTER_NEAREST);
 		weed = false;

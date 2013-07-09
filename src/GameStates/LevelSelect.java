@@ -53,7 +53,7 @@ public class LevelSelect extends BasicGameState {
 		int tempY = 0;
 		int tempX = 0;
 		
-		for(int i = 0; i < 24; i++){
+		for(int i = 0; i < 3; i++){
 			
 			String num = new String("" + i);
 			tempX += 32;

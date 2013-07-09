@@ -8,18 +8,17 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import Plants.Plant;
-import Plants.plantFour;
-import Plants.plantOne;
-import Plants.plantThree;
-import Plants.plantTwo;
-import Plants.plantZero;
+import Plants.Schiz;
+import Plants.Grass;
+import Plants.Spiderwort;
+import Plants.Milkweed;
+import Plants.BareGround;
 import Weeding.TileSize;
 
 
 public class Map {
 
-	Image tile;
-	int tileSize, gScale, tileTotal, columns, rows, x, y;
+	int tileSize, gScale, tileTotal, columns, rows, x, y, buffer;
 	protected Plant[] plantArray;
 	protected static ArrayList<Plant> speciesList;
 	protected Random random;
@@ -30,10 +29,10 @@ public class Map {
 		
 		random = new Random();
 		
+		buffer = TileSize.buffer;
+		
 		x = 0;
 		y = 0;
-		
-		tile = new Image("res/green.png", false, Image.FILTER_NEAREST);
 		
 		tileSize = TileSize.tileSize;
 		gScale = TileSize.gScale;
@@ -41,8 +40,8 @@ public class Map {
 		columns = gc.getWidth()/tileSize/gScale;
 		rows = gc.getHeight()/tileSize/gScale;
 		
-		columns -= 2;
-		rows -= 2;
+		columns -= buffer * 2;
+		rows -= buffer * 2;
 		
 		tileTotal = columns * rows;
 		
@@ -78,8 +77,8 @@ public class Map {
 		int tempRow = 0;
 		int tempColumn = 0;
 		
-		for(int i = 0; i < (columns + 2); i++){
-			for(int j = 0; j < (rows + 2); j++){
+		for(int i = 0; i < (columns + (buffer * 2)); i++){
+			for(int j = 0; j < (rows + (buffer * 2)); j++){
 				background.draw(i * tileSize, j * tileSize);
 			}
 			
@@ -95,7 +94,7 @@ public class Map {
 			}
 			
 			
-			plantArray[i].getImage().draw(tileSize + (tempColumn * tileSize), tileSize + (tempRow * tileSize));
+			plantArray[i].getImage().draw(tileSize * buffer + (tempColumn * tileSize), tileSize * buffer  + (tempRow * tileSize));
 			
 			tempColumn += 1;
 		}
@@ -104,12 +103,11 @@ public class Map {
 	
 	}
 	
-	//TO DO: only change adjacent plant if it's not the same plant
 	
 	public void update(int delta) throws SlickException {
 		
 		
-		for(int i = 0; i < tileTotal; i++)plantArray[i].update(delta);
+		for(int i = 0; i < tileTotal; i++) plantArray[i].update(delta);
 		
 		for(int i = 0; i < tileTotal; i++){
 			
@@ -135,16 +133,16 @@ public class Map {
 							&& plantArray[i - columns].getPlantID() == 0){
 						//plantArray[i - columns] = plantArray[i];
 						switch (plantID) {
-						case 1: plantArray[i - columns] = new plantOne(0);
+						case 1: plantArray[i - columns] = new Grass(0);
 							break;
-						case 2: plantArray[i - columns] = new plantTwo(0);
+						case 2: plantArray[i - columns] = new Milkweed(0);
 							break;
-						case 3: plantArray[i - columns] = new plantThree(0);
+						case 3: plantArray[i - columns] = new Spiderwort(0);
 							break;
-						case 4: plantArray[i - columns] = new plantFour(0);
+						case 4: plantArray[i - columns] = new Schiz(0);
 							break;
 
-						default: plantArray[i - columns] = new plantZero();
+						default: plantArray[i - columns] = new BareGround();
 							break;
 						}
 						
@@ -160,16 +158,16 @@ public class Map {
 							&& plantArray[i + columns].getPlantID() == 0){
 					//	plantArray[i + columns] = plantArray[i];
 						switch (plantID) {
-						case 1: plantArray[i + columns] = new plantOne(0);
+						case 1: plantArray[i + columns] = new Grass(0);
 							break;
-						case 2: plantArray[i + columns] = new plantTwo(0);
+						case 2: plantArray[i + columns] = new Milkweed(0);
 							break;
-						case 3: plantArray[i + columns] = new plantThree(0);
+						case 3: plantArray[i + columns] = new Spiderwort(0);
 							break;
-						case 4: plantArray[i - columns] = new plantFour(0);
+						case 4: plantArray[i + columns] = new Schiz(0);
 							break;
 
-						default: plantArray[i + columns] = new plantZero();
+						default: plantArray[i + columns] = new BareGround();
 							break;
 						}
 						plantArray[i].resetTimer();
@@ -185,16 +183,16 @@ public class Map {
 						//	plantArray[i - 1] = plantArray[i];
 							
 							switch (plantID) {
-							case 1: plantArray[i - 1] = new plantOne(0);
+							case 1: plantArray[i - 1] = new Grass(0);
 								break;
-							case 2: plantArray[i - 1] = new plantTwo(0);
+							case 2: plantArray[i - 1] = new Milkweed(0);
 								break;
-							case 3: plantArray[i - 1] = new plantThree(0);
+							case 3: plantArray[i - 1] = new Spiderwort(0);
 								break;
-							case 4: plantArray[i - columns] = new plantFour(0);
+							case 4: plantArray[i - 1] = new Schiz(0);
 								break;
 
-							default: plantArray[i - 1] = new plantZero();
+							default: plantArray[i - 1] = new BareGround();
 								break;
 							}
 							plantArray[i].resetTimer();
@@ -212,16 +210,16 @@ public class Map {
 							//plantArray[i + 1] = plantArray[i];
 							
 							switch (plantID) {
-							case 1: plantArray[i + 1] = new plantOne(0);
+							case 1: plantArray[i + 1] = new Grass(0);
 								break;
-							case 2: plantArray[i + 1] = new plantTwo(0);
+							case 2: plantArray[i + 1] = new Milkweed(0);
 								break;
-							case 3: plantArray[i + 1] = new plantThree(0);
+							case 3: plantArray[i + 1] = new Spiderwort(0);
 								break;
-							case 4: plantArray[i + 1] = new plantFour(0);
+							case 4: plantArray[i + 1] = new Schiz(0);
 								break;
 
-							default: plantArray[i + 1] = new plantZero();
+							default: plantArray[i + 1] = new BareGround();
 								break;
 							}
 							plantArray[i].resetTimer();
@@ -245,12 +243,26 @@ public class Map {
 	
 	public void removePlant(int xTile, int yTile) throws SlickException {
 		
-		plantArray[((yTile - 1) * columns) + xTile] = new plantZero();
+		
+		
+		try {
+			plantArray[(yTile * columns) + xTile] = new BareGround();
+			
+		} catch (ArrayIndexOutOfBoundsException e) {
+			
+		} 
+		
 	}
 	
 	public int getPlantResistance(int xTile, int yTile){
 		
-		return plantArray[((yTile - 1) * columns) + xTile].getResistance();
+		try {
+			return plantArray[(yTile * columns) + xTile].getResistance();
+			
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return 0;
+		} 
+	
 	}
 	
 	

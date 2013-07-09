@@ -86,17 +86,18 @@ public class Player {
 	
 	public void update(GameContainer gc, int delta){
 		
-	
+		int buffer = TileSize.buffer;
 		
-		yLocation = (tileSize + y)/tileSize;
-		xLocation = (tileSize + x)/tileSize;
+		yLocation = (tileSize  + y)/tileSize;
+		xLocation = (tileSize  + x)/tileSize;
+		
 		
 		Input input = gc.getInput();
 		
 	
 		timer += delta * 0.25;
 		
-		
+		System.out.println(x + " " + y);
 
 		if(input.isKeyPressed(Input.KEY_W) || input.isKeyPressed(Input.KEY_UP)){
 			
