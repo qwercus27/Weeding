@@ -14,9 +14,15 @@ public class Spiderwort extends Plant {
 		flower = sheet.getSprite(2, 2);
 		seeding = sheet.getSprite(3, 2);
 		
-		image = flower;
+		//image = flower;
 		
 		growthStage = stage;
+		
+		if(growthStage == 0)image = seed;
+		if(growthStage == 1)image = sprout;
+		if(growthStage == 2)image = flower;
+		if(growthStage == 3)image = seeding;
+		if(growthStage == 4)growthStage = 0;
 		
 		weed = true;
 		strength = 4;

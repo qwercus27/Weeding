@@ -233,11 +233,7 @@ public class Map {
 				plantArray[i].resetTimer();
 			}
 			
-			
-			
-			
-			
-			
+
 		}
 	}
 	

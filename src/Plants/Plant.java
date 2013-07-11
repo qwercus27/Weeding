@@ -12,7 +12,7 @@ import Weeding.TileSize;
 public class Plant {
 	
 	protected Image image, seed, sprout, flower, seeding;
-	protected SpriteSheet sheet;
+	protected static SpriteSheet sheet;
 	protected boolean weed;
 	protected int strength, resistance, growthRoll;
 	protected float timer, growthTimer;
@@ -23,7 +23,7 @@ public class Plant {
 		
 		tileSize = TileSize.tileSize;
 	
-		sheet = new SpriteSheet("res/plantSheet.png", tileSize, tileSize);
+		if(sheet == null)sheet = new SpriteSheet("res/plantSheet.png", tileSize, tileSize);
 	
 		
 		growthStage = 2;

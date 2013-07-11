@@ -12,7 +12,6 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Player {
 
-	private Image image;
 	private static int x, y;
 	private int tileSize = TileSize.tileSize, gScale = TileSize.gScale;
 	private static int yLocation, xLocation;
@@ -24,10 +23,6 @@ public class Player {
 	
 	
 	public Player(int x, int y) throws SlickException{
-		
-		image = new Image("res/red.png", false, Image.FILTER_NEAREST);
-		
-		
 		
 		spriteSheet = new SpriteSheet("res/characterSprites.png", 16, 16);
 		
