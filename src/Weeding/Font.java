@@ -2,6 +2,8 @@ package Weeding;
 
 
 import java.util.ArrayList;
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -14,7 +16,7 @@ public class Font {
 	
 	public Font() throws SlickException {
 		
-		text = new Image("res/textAll.png",false, Image.FILTER_NEAREST);
+		text = new Image("res/textAllWhite.png",false, Image.FILTER_NEAREST);
 		letters = new ArrayList<Image>();
 		
 		for(int i=0; i<81; i++){
@@ -28,7 +30,7 @@ public class Font {
 			"0123456789.,!?'\"-+=/\\%()<>:; " + //
 			"";
 
-	public  void draw(String msg, int x, int y) {
+	public  void draw(String msg, int x, int y, Color color) {
 		
 		for (int i = 0; i < msg.length(); i++) {
 			
@@ -49,7 +51,7 @@ public class Font {
 				}
 				}
 				
-				letters.get(ix).draw(x + i * 8, y);
+				letters.get(ix).draw(x + i * 8, y, color);
 				//screen.render(x + i * 8, y, ix + 30 * 32, col, 0);
 			}
 		}

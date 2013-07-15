@@ -48,7 +48,7 @@ public class LevelSelect extends BasicGameState {
 		
 		g.scale(gScale, gScale);
 		g.setBackground(Color.white);
-		font.draw("Plot " + selectedPlot, (gc.getWidth()/(gScale * 2) - (tileSize/2) * 3), 8);
+		font.draw("Plot " + selectedPlot, (gc.getWidth()/(gScale * 2) - (tileSize/2) * 3), 8, Color.green);
 		
 		int tempY = 0;
 		int tempX = 0;
@@ -66,7 +66,7 @@ public class LevelSelect extends BasicGameState {
 			if(i == 10)tempX -= 4;
 			if(i > 10 && i % 6 == 0)tempX -= 4;
 			
-			font.draw(num, 32 + tempX, tempY);
+			font.draw(num, 32 + tempX, tempY, Color.green);
 		}
 		
 		

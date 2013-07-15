@@ -3,16 +3,18 @@ package Plants;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Spiderwort extends Plant {
+public class AsclepiasS extends Plant {
 	
-	public Spiderwort(int stage) throws SlickException {
+	public AsclepiasS(int stage ) throws SlickException {
 		
-		plantNumber = 3;
+		//Asclepais syriaca, common milkweed
 		
-		seed = sheet.getSprite(0, 2);
-		sprout = sheet.getSprite(1, 2);
-		flower = sheet.getSprite(2, 2);
-		seeding = sheet.getSprite(3, 2);
+		plantNumber = 2;
+		
+		seed = sheet.getSprite(0, 1);
+		sprout = sheet.getSprite(1, 1);
+		flower = sheet.getSprite(2, 1);
+		seeding = sheet.getSprite(3, 1);
 		
 		//image = flower;
 		
@@ -25,12 +27,14 @@ public class Spiderwort extends Plant {
 		if(growthStage == 4)growthStage = 0;
 		
 		weed = true;
-		strength = 4;
-		timerSpeed = 3;
-		resistance = 2;
+		strength = 3;
+		timerSpeed = 2;
+		resistance = 4;
 		
 		growthTimer = -(random.nextInt(30));
 		
+		rhizome = true;
+		perennial = true;
 	}
 	
 	public void update(int delta){
@@ -38,6 +42,7 @@ public class Spiderwort extends Plant {
 		
 		timer += delta * 0.0025 * timerSpeed;
 		 
+		
 		 growthTimer += delta * 0.0025 * timerSpeed;
 				 
 		 

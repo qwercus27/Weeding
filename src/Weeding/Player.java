@@ -92,7 +92,7 @@ public class Player {
 	
 		timer += delta * 0.25;
 		
-		System.out.println(x + " " + y);
+		
 
 		if(input.isKeyPressed(Input.KEY_W) || input.isKeyPressed(Input.KEY_UP)){
 			
@@ -229,6 +229,14 @@ public class Player {
 	
 	public static void addY(int why ){
 		y += why;
+	}
+	
+	public static void setX( int ex){
+		x = ex;
+	}
+	
+	public static void setY( int why){
+		y = why;
 	}
 	
 	public static boolean isLeft(){

@@ -1,5 +1,6 @@
 package Plants;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.newdawn.slick.Image;
@@ -13,11 +14,12 @@ public class Plant {
 	
 	protected Image image, seed, sprout, flower, seeding;
 	protected static SpriteSheet sheet;
-	protected boolean weed;
+	protected boolean weed, rhizome, perennial;
 	protected int strength, resistance, growthRoll;
 	protected float timer, growthTimer;
 	protected int timerSpeed, tileSize, growthStage, plantNumber;
 	protected Random random;
+	protected Integer[] spreadList;
 	
 	public Plant() throws SlickException {
 		
@@ -31,6 +33,9 @@ public class Plant {
 		
 		random = new Random();
 		
+		spreadList = new Integer[8];
+
+		
 	
 	}
 	
@@ -39,12 +44,28 @@ public class Plant {
 		return plantNumber;
 	}
 	
+	public Integer[] getSpreadList(){
+		return spreadList;
+	}
+	
 	public Image getImage(){
 		return image;
 	}
 	
 	public boolean isWeed(){
 		return weed;
+	}
+	
+	public void setWeed(boolean value){
+		weed = value;
+	}
+	
+	public boolean hasRhizome(){
+		return rhizome;
+	}
+	
+	public boolean isPerennial(){
+		return perennial;
 	}
 	
 	public int getStrength(){

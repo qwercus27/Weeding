@@ -40,6 +40,7 @@ public class WeedingMain extends StateBasedGame {
 		AppGameContainer appgc = new AppGameContainer(new WeedingMain());
 		appgc.setDisplayMode(272 *  4, 192 * 4 , false);
 		appgc.setTargetFrameRate(60);
+		
 		appgc.start();
 	}
 

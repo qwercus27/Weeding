@@ -3,16 +3,18 @@ package Plants;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Schiz extends Plant {
+public class Rumex extends Plant {
 	
-	public Schiz(int stage) throws SlickException {
+	public Rumex(int stage) throws SlickException {
 		
-		plantNumber = 4;
+		//Rumex acetofolia, sheep sorrel
 		
-		seed = sheet.getSprite(0, 3);
-		sprout = sheet.getSprite(1, 3);
-		flower = sheet.getSprite(2, 3);
-		seeding = sheet.getSprite(3, 3);
+		plantNumber = 7;
+		
+		seed = sheet.getSprite(0, 6);
+		sprout = sheet.getSprite(1, 6);
+		flower = sheet.getSprite(2, 6);
+		seeding = sheet.getSprite(3, 6);
 		
 		//image = flower;
 		
@@ -28,7 +30,9 @@ public class Schiz extends Plant {
 		weed = true;
 		strength = 4;
 		timerSpeed = 3;
-		resistance = 5;
+		resistance = 1;
+		
+		rhizome = true;
 		
 		growthTimer = -(random.nextInt(30));
 		

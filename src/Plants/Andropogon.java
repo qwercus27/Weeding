@@ -3,17 +3,19 @@ package Plants;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Milkweed extends Plant {
+public class Andropogon extends Plant {
 	
-	public Milkweed(int stage ) throws SlickException {
+	public Andropogon(int stage) throws SlickException {
 		
-		plantNumber = 2;
+		//Andropogon gerardii, big bluestem
 		
-		seed = sheet.getSprite(0, 1);
-		sprout = sheet.getSprite(1, 1);
-		flower = sheet.getSprite(2, 1);
-		seeding = sheet.getSprite(3, 1);
+		plantNumber = 1;
 		
+		seed = sheet.getSprite(0, 0);
+		sprout = sheet.getSprite(1, 0);
+		flower = sheet.getSprite(2, 0);
+		seeding = sheet.getSprite(3, 0);
+	
 		//image = flower;
 		
 		growthStage = stage;
@@ -24,10 +26,13 @@ public class Milkweed extends Plant {
 		if(growthStage == 3)image = seeding;
 		if(growthStage == 4)growthStage = 0;
 		
-		weed = true;
-		strength = 3;
-		timerSpeed = 2;
-		resistance = 1;
+		weed = false;
+		strength = 1;
+		timerSpeed = 1;
+		resistance = 4;
+		
+		rhizome = true;
+		perennial = true;
 		
 		growthTimer = -(random.nextInt(30));
 	}
@@ -37,7 +42,6 @@ public class Milkweed extends Plant {
 		
 		timer += delta * 0.0025 * timerSpeed;
 		 
-		
 		 growthTimer += delta * 0.0025 * timerSpeed;
 				 
 		 
@@ -55,7 +59,7 @@ public class Milkweed extends Plant {
 		if(growthStage == 1)image = sprout;
 		if(growthStage == 2)image = flower;
 		if(growthStage == 3)image = seeding;
-		if(growthStage == 4)growthStage = 0;
+		
 		
 	}
 

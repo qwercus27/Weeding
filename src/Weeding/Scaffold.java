@@ -25,7 +25,7 @@ public class Scaffold {
 		//location = (this.x + tileSize)/tileSize;
 	}
 	
-	public void render(GameContainer gc, Graphics g){
+	/*public void render(GameContainer gc, Graphics g){
 		
 		for(int j = 0; j < gc.getHeight()/16; j++ ){
 			image.draw(x, j * tileSize);
@@ -88,5 +88,5 @@ public class Scaffold {
 	
 	public int getLocation(){
 		return location;
-	}
+	}*/
 }

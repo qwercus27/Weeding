@@ -3,17 +3,19 @@ package Plants;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Grass extends Plant {
+public class Tradescantia extends Plant {
 	
-	public Grass(int stage) throws SlickException {
+	public Tradescantia(int stage) throws SlickException {
 		
-		plantNumber = 1;
+		//Tradescantia occidentalis, prairie spiderwort
 		
-		seed = sheet.getSprite(0, 0);
-		sprout = sheet.getSprite(1, 0);
-		flower = sheet.getSprite(2, 0);
-		seeding = sheet.getSprite(3, 0);
-	
+		plantNumber = 3;
+		
+		seed = sheet.getSprite(0, 2);
+		sprout = sheet.getSprite(1, 2);
+		flower = sheet.getSprite(2, 2);
+		seeding = sheet.getSprite(3, 2);
+		
 		//image = flower;
 		
 		growthStage = stage;
@@ -24,12 +26,13 @@ public class Grass extends Plant {
 		if(growthStage == 3)image = seeding;
 		if(growthStage == 4)growthStage = 0;
 		
-		weed = false;
-		strength = 1;
-		timerSpeed = 1;
-		resistance = 4;
+		weed = true;
+		strength = 4;
+		timerSpeed = 3;
+		resistance = 2;
 		
 		growthTimer = -(random.nextInt(30));
+		
 	}
 	
 	public void update(int delta){
@@ -54,7 +57,7 @@ public class Grass extends Plant {
 		if(growthStage == 1)image = sprout;
 		if(growthStage == 2)image = flower;
 		if(growthStage == 3)image = seeding;
-		
+		if(growthStage == 4)growthStage = 0;
 		
 	}
 

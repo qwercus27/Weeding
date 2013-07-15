@@ -1,0 +1,8 @@
+Weeding
+=======
+
+A simple game centered around pulling weeds.
+
+Written in Java using Eclipse IDE.
+
+To run in Eclipse on a Linux OS, you may have to add this to the VM Arguments: -Djava.library.path="lib/natives/linux"
