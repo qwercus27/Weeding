@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import GameStates.LevelSelect;
+import GameStates.Title;
 import GameStates.WeedingState;
 
 
@@ -14,6 +15,7 @@ public class WeedingMain extends StateBasedGame {
 	
 	public static final int weeding = 0;
 	public static final int levelSelect = 1;
+	public static final int title = 2;
 	
 
 	
@@ -22,9 +24,10 @@ public class WeedingMain extends StateBasedGame {
 		
 		this.addState(new LevelSelect(levelSelect));
 		this.addState(new WeedingState(weeding));
+		this.addState(new Title(title));
 		
 		
-		this.enterState(levelSelect);
+		this.enterState(title);
 	}
 
 	
@@ -32,6 +35,7 @@ public class WeedingMain extends StateBasedGame {
 		
 		this.getState(levelSelect).init(gc, this);
 		this.getState(weeding).init(gc, this);
+		this.getState(title).init(gc,  this);
 		
 	}
 		

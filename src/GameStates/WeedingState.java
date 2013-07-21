@@ -4,13 +4,14 @@ package GameStates;
 
 import java.util.ArrayList;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -31,10 +32,13 @@ public class WeedingState extends BasicGameState {
 	private Scaffold scaffold;
 	private Cursor cursor;
 	private float pullTimer;
-	private boolean fail, spaceRelease, leaveState, success;
+	private boolean fail, spaceRelease, leaveState, success, digging;
 	private CurrentMap currentMap;
 	private Image plantFrame;
 	private Font font;
+	private Sound dig, pop;
+	private Music running;
+	
 	
 	public WeedingState(int state) throws SlickException {
 		
@@ -49,7 +53,13 @@ public class WeedingState extends BasicGameState {
 		startX = 32;
 		startY = 32;
 		
+		
 		player = new Player(startX, startY);
+		
+		
+		dig = new Sound("res/digging.ogg");
+		pop = new Sound("res/pop.ogg");
+		running = new Music("res/Running.ogg");
 		
 		leaveState = false;
 		pullTimer = 0;
@@ -66,6 +76,8 @@ public class WeedingState extends BasicGameState {
 		
 		font = new Font();
 		
+		digging = false;
+		
 		weedTotal = 0;
 		fail = false;
 		success = false;
@@ -73,6 +85,8 @@ public class WeedingState extends BasicGameState {
 	}
 
 	public void render(GameContainer gc, StateBasedGame sb, Graphics g)	throws SlickException {
+		
+		
 		
 		g.scale(gScale, gScale);
 	
@@ -101,6 +115,8 @@ public class WeedingState extends BasicGameState {
 
 	public void update(GameContainer gc, StateBasedGame sb, int delta)throws SlickException {
 		
+		if(!running.playing())running.play(1f, 0.5f);
+		
 		if(!fail){
 			player.update(gc, delta);
 			
@@ -123,10 +139,14 @@ public class WeedingState extends BasicGameState {
 		
 		System.out.println(playerX + ", " + playerY);
 		
+		
+		if(input.isKeyPressed(Input.KEY_SPACE)){
+			digging = true;
+		}
 		if(input.isKeyDown(Input.KEY_SPACE)){
 			
 			pullTimer += delta * 0.005;
-			
+
 			//add restriction for top and bottom of screen
 			
 			if(pullTimer > map.getPlantResistance(playerX - buffer, playerY - buffer) ){
@@ -136,6 +156,8 @@ public class WeedingState extends BasicGameState {
 						penalty -= 1;
 					}
 					
+					//pop.play(1f, 0.25f);
+					digging = false;
 					map.removePlant(playerX - buffer, playerY - buffer);
 					pullTimer = 0;
 					spaceRelease = false;
@@ -144,7 +166,12 @@ public class WeedingState extends BasicGameState {
 				}
 			}
 			
-		}
+		}else digging = false;
+		
+		if(digging  && !dig.playing())	dig.play();
+		if(!digging)dig.stop();
+		
+		System.out.println(digging);
 		
 		if(!input.isKeyDown(Input.KEY_SPACE)){
 			pullTimer = 0;
@@ -208,6 +235,7 @@ public class WeedingState extends BasicGameState {
 			
 			Player.setX(startX);
 			Player.setY(startY);
+			running.stop();
 			leaveState = false;
 			
 		}

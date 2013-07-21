@@ -9,9 +9,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Audio.WeedingMusic;
 import Maps.CurrentMap;
-import Maps.Map;
-import Plants.Plant;
 import Weeding.Font;
 import Weeding.TileSize;
 
@@ -21,7 +20,8 @@ public class LevelSelect extends BasicGameState {
 	
 	private int tileSize, gScale, cursorX, cursorY, selectedPlot;
 	private Font font;
-	private Image cursor;
+	private Image cursor, plot, path;
+	private WeedingMusic wm;
 
 	
 	public LevelSelect(int state) {
@@ -34,43 +34,80 @@ public class LevelSelect extends BasicGameState {
 		gScale = TileSize.gScale;
 		
 		cursor = new Image("res/cursorDark.png", false, Image.FILTER_NEAREST);
+		plot = new Image("res/plot.png", false, Image.FILTER_NEAREST);
+		path = new Image("res/pathSmall.png", false, Image.FILTER_NEAREST);
 		
 		cursorX = 0;
 		cursorY = 0;
 		
 		font = new Font();
-
 		
-		selectedPlot = cursorX + (cursorY * 6);
+		wm = new WeedingMusic();		
+		
+		selectedPlot = cursorX + (cursorY * 6) ;
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		
 		g.scale(gScale, gScale);
 		g.setBackground(Color.white);
-		font.draw("Plot " + selectedPlot, (gc.getWidth()/(gScale * 2) - (tileSize/2) * 3), 8, Color.green);
+		font.draw("Plot " + selectedPlot, (gc.getWidth()/(gScale * 2) - (tileSize/2) * 3), 8, new Color(0, 100,0));
 		
-		int tempY = 0;
-		int tempX = 0;
 		
-		for(int i = 0; i < 3; i++){
+		int numY = 0;
+		int numX = 0;
+		int plotX = 0;
+		int plotY = 0;
+		int pathX = 0;
+		int pathY = 0;
+		
+		int screenX = gc.getWidth()/16/4;
+		int screenY = gc.getHeight()/16/4;
+		
+		int grid = (16 * 8 * screenY);
+		
+		for(int i = 0; i < grid - (screenY * 4); i ++){
 			
-			String num = new String("" + i);
-			tempX += 32;
+			pathX += 16;
 			
-			if(i % 6 == 0) {
-				tempY += 32;
-				tempX = 0;
+			if(i % (screenX) == 0){
+				pathY += 16;
+				pathX = 0;
 			}
 			
-			if(i == 10)tempX -= 4;
-			if(i > 10 && i % 6 == 0)tempX -= 4;
+			if(pathY/16 < screenY - 2)	path.draw(pathX, pathY + 4);
 			
-			font.draw(num, 32 + tempX, tempY, Color.green);
+			
+		}
+		
+			
+		
+		
+		int distance = 28;
+	
+		
+		for(int i = 0; i < 28; i++){
+			
+			String num = new String("" + (i + 1));
+			numX += distance;
+			plotX += distance;
+			
+			if(i % 8 == 0) {
+				numY += distance;
+				numX = 0;
+				plotY += distance;
+				plotX = 0;
+			}
+			
+			if(i == 10)numX -= 4;
+			if(i > 10 && i % 8 == 0)numX -= 4;
+			
+			plot.draw(28 + plotX, plotY );
+			//font.draw(num, 32 + numX, numY, Color.white);
 		}
 		
 		
-		cursor.draw(28 + cursorX * 32, 28 + cursorY * 32);
+		cursor.draw(28 + cursorX * distance, distance + cursorY * distance);
 		
 		
 		
@@ -85,10 +122,10 @@ public class LevelSelect extends BasicGameState {
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		
-		selectedPlot = cursorX + (cursorY * 6);
+		selectedPlot = cursorX + (cursorY * 6) + 1;
 		
-		System.out.println(selectedPlot);
-		
+
+		if(!WeedingMusic.getMenu().playing() && !WeedingMusic.getTitle().playing())WeedingMusic.getMenu().loop(1f, .5f);
 		CurrentMap.setCurrentMap(selectedPlot, gc);
 		
 		
@@ -113,6 +150,13 @@ public class LevelSelect extends BasicGameState {
 		if(input.isKeyPressed(Input.KEY_ENTER)){
 	
 			sbg.enterState(0);
+		}
+		
+		if(input.isKeyPressed(Input.KEY_ESCAPE)){
+			WeedingMusic.stop();
+			WeedingMusic.getTitle().play(1f, 0.5f);
+			sbg.enterState(2);
+			
 		}
 
 		

@@ -26,6 +26,7 @@ public class Map {
 
 	int tileSize, gScale, tileTotal, columns, rows, x, y, buffer;
 	protected double timeLimit;
+	protected int weedCounter, nonWeedCounter, numWeeds, nonWeeds;
 	protected Plant[] plantArray;
 	protected static ArrayList<Plant> speciesList;
 	protected Random random;
