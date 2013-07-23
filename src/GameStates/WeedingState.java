@@ -2,6 +2,7 @@ package GameStates;
 
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -34,10 +35,11 @@ public class WeedingState extends BasicGameState {
 	private float pullTimer;
 	private boolean fail, spaceRelease, leaveState, success, digging;
 	private CurrentMap currentMap;
-	private Image plantFrame;
+	private Image plantFrame, leaf, dandelion, clock;
 	private Font font;
 	private Sound dig, pop;
 	private Music running;
+	private BigDecimal timeRounded;
 	
 	
 	public WeedingState(int state) throws SlickException {
@@ -71,6 +73,9 @@ public class WeedingState extends BasicGameState {
 		currentMap = new CurrentMap(gc);
 		
 		plantFrame = new Image("res/plantFrame.png", false, Image.FILTER_NEAREST);
+		leaf = new Image("res/leaf.png", false, Image.FILTER_NEAREST);
+		dandelion = new Image("res/dandelion.png", false, Image.FILTER_NEAREST);
+		clock = new Image("res/clock.png", false, Image.FILTER_NEAREST);
 		
 		map = CurrentMap.getCurrentMap();
 		
@@ -81,6 +86,8 @@ public class WeedingState extends BasicGameState {
 		weedTotal = 0;
 		fail = false;
 		success = false;
+		
+		
 
 	}
 
@@ -96,16 +103,26 @@ public class WeedingState extends BasicGameState {
 		
 		for(int i = 0; i < map.getSpecies().size(); i++){
 			
-			plantFrame.draw(6 + i * 24, 6);
-			map.getSpecies().get(i).getImage().draw(8 + i * 24, 8);
+			plantFrame.draw(6 + i * 24, 2);
+			map.getSpecies().get(i).getImage().draw(8 + i * 24, 4);
 		}
 		
-	
-		font.draw("" + (float)map.getTime(), gc.getWidth()/4 - 64, 10, Color.white);
+		dandelion.draw(gc.getWidth()/4 - 160 - 20, 4);
+		font.draw("" + weedTotal, gc.getWidth()/4 - 160, 10, Color.white);
 		
-		font.draw("" + penalty, gc.getWidth()/4 - 96, 10, Color.white);
+		for(int i = 0; i < penalty; i++){
+			leaf.draw(gc.getWidth()/4 - 128 + (i * 16), 4);
+		}
 		
-		font.draw("" + weedTotal, gc.getWidth()/4 - 128, 10, Color.white);
+		BigDecimal timeRounded = new BigDecimal(map.getTime());
+		timeRounded = timeRounded.setScale(1, BigDecimal.ROUND_UP);
+		
+		clock.draw(gc.getWidth()/4 - 64, 4);
+		font.draw("" + timeRounded, gc.getWidth()/4 - 46, 10, Color.white);
+		
+		//font.draw("" + penalty, gc.getWidth()/4 - 96, 10, Color.white);
+		
+		
 		
 		if(fail)font.draw("Fail!  Press Enter", gc.getWidth()/8 - 64, gc.getHeight()/8 - 8, Color.red);
 		if(success)font.draw("Success!  Press Enter", gc.getWidth()/8 - 64, gc.getHeight()/8 - 8, Color.white);
@@ -117,14 +134,7 @@ public class WeedingState extends BasicGameState {
 		
 		if(!running.playing())running.play(1f, 0.5f);
 		
-		if(!fail){
-			player.update(gc, delta);
-			
-			map.update(delta);
-		}
-		
-		if(fail || success)map.setPause(true);
-		else map.setPause(false);
+	
 		
 		Input input = gc.getInput();
 		
@@ -137,7 +147,6 @@ public class WeedingState extends BasicGameState {
 		int columns = map.getColumns();
 		int buffer = TileSize.buffer;
 		
-		System.out.println(playerX + ", " + playerY);
 		
 		
 		if(input.isKeyPressed(Input.KEY_SPACE)){
@@ -171,7 +180,6 @@ public class WeedingState extends BasicGameState {
 		if(digging  && !dig.playing())	dig.play();
 		if(!digging)dig.stop();
 		
-		System.out.println(digging);
 		
 		if(!input.isKeyDown(Input.KEY_SPACE)){
 			pullTimer = 0;
@@ -221,6 +229,7 @@ public class WeedingState extends BasicGameState {
 			sb.enterState(1);
 			fail = false;
 			penalty = 3;
+			map.setTime(map.getTimeLimit());
 			leaveState = true;
 			
 		}
@@ -228,6 +237,7 @@ public class WeedingState extends BasicGameState {
 		if(success && input.isKeyPressed(Input.KEY_ENTER)){
 			sb.enterState(1);
 			leaveState = true;
+			weedTotal = 1;
 			success = false;
 		}
 		
@@ -236,9 +246,20 @@ public class WeedingState extends BasicGameState {
 			Player.setX(startX);
 			Player.setY(startY);
 			running.stop();
+			success = false;
+			fail = false;
 			leaveState = false;
 			
 		}
+		
+		if(!fail && !success){
+			player.update(gc, delta);
+			
+			map.update(delta);
+		}
+		
+		if(fail)map.setPause(true);
+		else map.setPause(false);
 		
 	}
 

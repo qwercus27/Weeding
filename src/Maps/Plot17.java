@@ -17,6 +17,7 @@ public class Plot17 extends Map {
 		speciesList.add(1, new Schizachyrium(2));
 		
 		timeLimit = 40;
+		time = timeLimit;
 	
 		for(int i = 0; i < tileTotal; i++){
 			int roll = random.nextInt(4);

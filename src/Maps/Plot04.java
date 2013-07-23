@@ -17,7 +17,8 @@ public class Plot04 extends Map {
 		
 		speciesList.add(0, new Andropogon(2));
 		
-		timeLimit = 30;
+		timeLimit = 40;
+		time = timeLimit;
 	
 		for(int i = 0; i < (tileTotal - 15); i++){
 			int roll = random.nextInt(10);

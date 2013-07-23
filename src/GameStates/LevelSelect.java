@@ -35,7 +35,7 @@ public class LevelSelect extends BasicGameState {
 		
 		cursor = new Image("res/cursorDark.png", false, Image.FILTER_NEAREST);
 		plot = new Image("res/plot.png", false, Image.FILTER_NEAREST);
-		path = new Image("res/pathSmall.png", false, Image.FILTER_NEAREST);
+		path = new Image("res/pathSmallWet.png", false, Image.FILTER_NEAREST);
 		
 		cursorX = 0;
 		cursorY = 0;

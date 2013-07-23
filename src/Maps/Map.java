@@ -6,6 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 import Plants.Achillea;
 import Plants.Andropogon;
@@ -25,13 +26,14 @@ import Weeding.TileSize;
 public class Map {
 
 	int tileSize, gScale, tileTotal, columns, rows, x, y, buffer;
-	protected double timeLimit;
+	protected double time, timeLimit;
 	protected int weedCounter, nonWeedCounter, numWeeds, nonWeeds;
 	protected Plant[] plantArray;
 	protected static ArrayList<Plant> speciesList;
 	protected Random random;
 	protected boolean pause;
-	private Image background;
+	private Image background, ground0, ground1, ground2, ground3, ground4, ground5, ground6, ground7, ground8;
+	private SpriteSheet groundSheet;
 	
 	
 	
@@ -45,6 +47,8 @@ public class Map {
 		
 		x = 0;
 		y = 0;
+		
+		
 		
 		tileSize = TileSize.tileSize;
 		gScale = TileSize.gScale;
@@ -61,7 +65,20 @@ public class Map {
 		
 		speciesList = new ArrayList<Plant>();
 		
+		groundSheet = new SpriteSheet("res/ground.png", 16, 16);
+		
 		background = new Image("res/dirt.png", false, Image.FILTER_NEAREST);
+		
+		ground0 = groundSheet.getSprite(1, 1); //center
+		ground1 = groundSheet.getSprite(0, 0); //top left
+		ground2 = groundSheet.getSprite(1, 0); //top
+		ground3 = groundSheet.getSprite(2, 0); //top right
+		ground4 = groundSheet.getSprite(0, 1); //left
+		ground5 = groundSheet.getSprite(2, 1); //right
+		ground6 = groundSheet.getSprite(0, 2); //bottom left
+		ground7 = groundSheet.getSprite(1, 2); //bottom
+		ground8 = groundSheet.getSprite(2, 2); //bottom right
+		
 		
 		
 		/*for(int i = 0; i < (tileTotal - 15); i++){
@@ -89,12 +106,59 @@ public class Map {
 		int tempRow = 0;
 		int tempColumn = 0;
 		
-		for(int i = 0; i < (columns + (buffer * 2)); i++){
+		/*for(int i = 0; i < (columns + (buffer * 2)); i++){
 			for(int j = 0; j < (rows + (buffer * 2)); j++){
 				background.draw(i * tileSize, j * tileSize);
 			}
 			
 			
+		}*/
+		
+		
+
+		for(int b = 0; b < buffer - 1; b++){
+			
+			for(int i = 0; i < columns + (buffer * 2); i++){
+				ground0.draw(i * tileSize, b * 16);
+				ground0.draw(i * tileSize, gc.getHeight()/4 - 16 - (b * 16));
+			}
+			
+			for(int i = 0; i < rows + (buffer * 2); i++){
+				ground0.draw(b * 16, i * tileSize);
+				ground0.draw(gc.getWidth()/4 - 16 - (b*16), i * 16);
+				
+			}
+		}
+		
+		int downBuff = buffer - 1;
+		int upBuff = buffer + 1;
+		ground1.draw(downBuff * tileSize, downBuff * tileSize);
+		ground3.draw(gc.getWidth()/gScale - tileSize - (downBuff*tileSize), downBuff * tileSize);
+		ground6.draw(downBuff * tileSize, gc.getHeight()/gScale -tileSize - downBuff * tileSize);
+		ground8.draw(gc.getWidth()/gScale - tileSize - (downBuff*tileSize), gc.getHeight()/gScale -tileSize - downBuff * tileSize);
+		
+		for(int i = 0; i < columns; i++){
+			
+			ground2.draw(buffer * tileSize + i * tileSize, downBuff * tileSize);
+			ground7.draw(buffer * tileSize + i * tileSize, gc.getHeight()/gScale - tileSize - downBuff * tileSize);
+		}
+		
+		for(int i = 0; i < rows; i++){
+			
+			ground4.draw(downBuff * tileSize , buffer * tileSize + i * tileSize);
+			ground5.draw(gc.getWidth()/gScale - tileSize - downBuff * tileSize, buffer * tileSize + i * tileSize);
+		}
+		
+		
+			
+		
+		
+		for(int i = 0; i < columns ; i++){
+			for(int j = 0; j < (rows); j++){
+			background.draw(buffer * tileSize + i * tileSize, buffer * tileSize + j * tileSize);
+			}
+		
+		
 		}
 		
 		for(int i = 0; i < tileTotal; i++){
@@ -120,7 +184,7 @@ public class Map {
 	
 	public void update(int delta) throws SlickException {
 		
-		if(!pause)timeLimit -= delta * 0.001;
+		if(!pause)time -= delta * 0.001;
 	
 	
 		for(int i = 0; i < tileTotal; i++) plantArray[i].update(delta);
@@ -361,6 +425,10 @@ public class Map {
 	}
 	
 	public double getTime(){
+		return time;
+	}
+	
+	public double getTimeLimit(){
 		return timeLimit;
 	}
 	
@@ -369,7 +437,7 @@ public class Map {
 	}
 	
 	public void setTime(double number){
-		timeLimit = number;
+		time = number;
 	}
 	
 	public void setPlant(int arrayIndex, Plant plant){

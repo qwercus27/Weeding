@@ -25,6 +25,7 @@ public class Plot24 extends Map {
 		speciesList.add(2, new Lupinus(2));
 
 		timeLimit = 3 * 60;
+		time = timeLimit;
 		
 		for(int i = 0; i < tileTotal; i++){
 			
