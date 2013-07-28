@@ -36,6 +36,10 @@ public class Progress implements Serializable{
 		locked[index] = false;
 	}
 	
+	public static void lock(int index){
+		
+		locked[index] = true;
+	}
 	
 	
 	public static void setLocked(boolean[] newLocked){

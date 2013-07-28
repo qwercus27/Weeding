@@ -28,6 +28,7 @@ public class LevelSelect extends BasicGameState {
 	private Image cursor, plot, path, lockedPlot;
 	private Progress progress;
 	private Save save;
+	private boolean[] locked;
 	
 	public LevelSelect(int state) {
 		
@@ -56,6 +57,8 @@ public class LevelSelect extends BasicGameState {
 		
 		progress = new Progress();
 		save = new Save();
+		
+		locked = Progress.getLocked();
 		
 		try {
 			save.Load();
@@ -103,8 +106,7 @@ public class LevelSelect extends BasicGameState {
 		
 		
 		int distance = 28;
-	
-		boolean[] locked = Progress.getLocked();
+
 		
 		for(int i = 0; i < 24; i++){
 			
@@ -146,6 +148,7 @@ public class LevelSelect extends BasicGameState {
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		
+		locked = Progress.getLocked();
 		
 		selectedPlot = cursorX + (cursorY * 8) + 1;
 		

@@ -11,7 +11,7 @@ public class Save {
 	
 	Progress progress;
 	String file, folder;
-	File f;
+	private static File f, f2;
 	
 	public Save() {
 		progress = new Progress();
@@ -20,6 +20,7 @@ public class Save {
 		file = folder + File.separator + "progress.txt";
 		
 		f = new File(folder);
+		f2 = new File(file);
 		
 	}
 
@@ -41,8 +42,8 @@ public class Save {
 	
 	public void Load() throws IOException {
 		
-		File file = new File("/home/michael/progress.txt");
-		if(file.exists()){
+	
+		if(f2.exists()){
 			BufferedReader in = new BufferedReader(new FileReader(file));
 			int numUnlocked = in.read();
 			System.out.println(numUnlocked);
@@ -55,6 +56,21 @@ public class Save {
 	     // progress.setLocked(progress.getLocked());
 	       
 	    }
+	
+	public static boolean exists(){
+		if(f2.exists())return true;
+		else return false;
+	}
+	
+	public static void delete(){
+		f2.delete();
+		
+		for(int i = 0; i < 24; i++){
+			Progress.lock(i);
+		}
+		Progress.unlock(1);
+		
+	}
 	
 	
 	
