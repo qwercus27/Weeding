@@ -20,6 +20,8 @@ public class Plot24 extends Map {
 	public Plot24(GameContainer gc) throws SlickException {
 		super(gc);
 		
+		mapID = 24;
+		
 		speciesList.add(0, new Andropogon(2));
 		speciesList.add(1, new Schizachyrium(2));
 		speciesList.add(2, new Lupinus(2));

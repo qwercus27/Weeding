@@ -14,10 +14,12 @@ public class Plot01 extends Map {
 	public Plot01(GameContainer gc) throws SlickException {
 		super(gc);
 		
-		timeLimit = 20;
+		mapID = 1;
+		
+		timeLimit = 10;
 		time = timeLimit;
 		
-		numWeeds = 10;
+		numWeeds = 3;
 		nonWeeds = 0;
 		weedCounter = 0;
 		nonWeedCounter = 0;

@@ -5,12 +5,13 @@ import org.newdawn.slick.SlickException;
 
 public class WeedingMusic {
 
-	private static Music title, menu;
+	private static Music title, menu, weeding;
 	
 	public WeedingMusic() throws SlickException{
 		
-		title = new Music("res/title.ogg");
-		menu = new Music("res/menu.ogg");
+		title = new Music("res/audio/title.ogg");
+		menu = new Music("res/audio/menu.ogg");
+		weeding = new Music("res/audio/Running.ogg");
 		
 	}
 	
@@ -22,8 +23,13 @@ public class WeedingMusic {
 		return menu;
 	}
 	
+	public static Music getWeeding(){
+		return weeding;
+	}
+	
 	public static void stop(){
 		if(title.playing())title.stop();
 		if(menu.playing())menu.stop();
+		if(weeding.playing())weeding.stop();
 	}
 }

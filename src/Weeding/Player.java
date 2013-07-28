@@ -17,16 +17,20 @@ public class Player {
 	private static int yLocation, xLocation;
 	private float timer = 0;
 	private SpriteSheet spriteSheet;
-	private static boolean isRight, isLeft, isUp, isDown;
+	private static boolean isRight, isLeft, isUp, isDown, isMoving;
 	private Animation rightStill, leftStill, upStill, downStill, right, left, up, down, sprite;
 	private Image[] downy, lefty, uppy, righty, down0, left0, up0, right0;
+	private Image[] res;
+	
 	
 	
 	public Player(int x, int y) throws SlickException{
 		
-		spriteSheet = new SpriteSheet("res/characterSprites.png", 16, 16);
+		res = ImageResources.getSprite();
 		
-		downy = new Image[]{spriteSheet.getSprite(1, 0), spriteSheet.getSprite(2, 0)};
+		//spriteSheet = new SpriteSheet("res/characterSprites.png", 16, 16);
+		
+		/*downy = new Image[]{spriteSheet.getSprite(1, 0), spriteSheet.getSprite(2, 0)};
 		lefty = new Image[]{spriteSheet.getSprite(4, 0), spriteSheet.getSprite(5, 0)};
 		uppy = new Image[]{spriteSheet.getSprite(7, 0), spriteSheet.getSprite(8, 0)};
 		righty = new Image[]{spriteSheet.getSprite(10, 0), spriteSheet.getSprite(11, 0)};
@@ -34,10 +38,17 @@ public class Player {
 		down0 = new Image[]{spriteSheet.getSprite(0, 0)};
 		left0 = new Image[]{spriteSheet.getSprite(3, 0)};
 		up0 = new Image[]{spriteSheet.getSprite(6, 0)};
-		right0 = new Image[]{spriteSheet.getSprite(9, 0)};
+		right0 = new Image[]{spriteSheet.getSprite(9, 0)};*/
 		
+		downy = new Image[]{res[1], res[2]};
+		lefty = new Image[]{res[4], res[5]};
+		uppy = new Image[]{res[7], res[8]};
+		righty = new Image[]{res[10], res[11]};
 		
-		
+		down0 = new Image[]{res[0]};
+		left0 = new Image[]{res[3]};
+		up0 = new Image[]{res[6]};
+		right0 = new Image[]{res[9]};
 		
 		right = new Animation(righty, 200);
 		left = new Animation(lefty, 200);
@@ -55,6 +66,8 @@ public class Player {
 		isDown = true;
 		isLeft = false;
 		isRight = false;
+		
+		isMoving = false;
 		
 		this.x = x;
 		this.y = y;
@@ -167,37 +180,64 @@ public class Player {
 			input.clearKeyPressedRecord();
 		}
 		
+		boolean one, two, three, four;
 		
-		if(timer > 50){
+		
 		
 			if(input.isKeyDown(Input.KEY_W) || input.isKeyDown(Input.KEY_UP)){
-				timer = 0;
-			
-				if(yLocation > 1)y -= tileSize;
-			}
+				
+				if(timer > 50){
+					timer = 0;
+					if(yLocation > 1)y -= tileSize;
+				}
+				one = true;
+				
+				
+			}else one = false;
 		
 			if(input.isKeyDown(Input.KEY_S) || input.isKeyDown(Input.KEY_DOWN)){
-				timer = 0;
+				
+				if(timer > 50){
+					timer = 0;
+					if(yLocation < gc.getHeight()/(tileSize * gScale))y += tileSize;
+				}
 			
-				if(yLocation < gc.getHeight()/(tileSize * gScale))y += tileSize;
+				two = true;
+				
+				
 			
-			}
+			}else two = false;
 			
 			if(input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT)){
-				timer = 0;
+				if(timer > 50){
+					timer = 0;
+					
+					if(xLocation > 1)x -= tileSize;
+				}
+				
+				three = true;
+				
 			
-				if(xLocation > 1)x -= tileSize;
-			
-			}
+			}else three = false;
 			
 			if(input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT)){
-				timer = 0;
+				if(timer > 50){
+					timer = 0;
+					if(xLocation < gc.getWidth()/(tileSize * gScale))x += tileSize;
+				}
+				
+				four = true;
+				
 			
-				if(xLocation < gc.getWidth()/(tileSize * gScale))x += tileSize;
 			
-			}
+			}else four = false;
+			
+			if(one || two || three || four)isMoving = true;
+			else isMoving = false;
+			
+			
 		
-		}
+		
 		
 		if(isRight && !input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_RIGHT)) sprite = rightStill;
 		if(isLeft && !input.isKeyDown(Input.KEY_A) && !input.isKeyDown(Input.KEY_LEFT)) sprite = leftStill;
@@ -253,5 +293,9 @@ public class Player {
 	
 	public static boolean isDown(){
 		return isDown;
+	}
+	
+	public static boolean isMoving(){
+		return isMoving;
 	}
 }

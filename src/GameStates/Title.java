@@ -23,7 +23,7 @@ public class Title extends BasicGameState {
 	private Font font;
 	private Image titleImage;
 	private Music titleMusic, menuMusic;
-	private WeedingMusic wm;
+	
 	
 	public Title(int state) {
 		
@@ -35,9 +35,6 @@ public class Title extends BasicGameState {
 		gScale = TileSize.gScale;
 		
 		titleImage = new Image("res/title.png", false, Image.FILTER_NEAREST);
-		
-		wm = new WeedingMusic();
-		
 		
 		WeedingMusic.getTitle().play(1f, 0.5f);
 	

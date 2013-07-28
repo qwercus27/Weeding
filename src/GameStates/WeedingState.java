@@ -2,8 +2,8 @@ package GameStates;
 
 
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -16,13 +16,16 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import Audio.WeedingMusic;
 import Maps.CurrentMap;
 import Maps.Map;
 import Plants.Plant;
 import Weeding.Cursor;
 import Weeding.Font;
+import Weeding.ImageResources;
 import Weeding.Player;
-import Weeding.Scaffold;
+import Weeding.Progress;
+import Weeding.Save;
 import Weeding.TileSize;
 
 public class WeedingState extends BasicGameState {
@@ -30,7 +33,6 @@ public class WeedingState extends BasicGameState {
 	private int tileSize, gScale, penalty, weedTotal, startX, startY;
 	private Player player;
 	private Map map;
-	private Scaffold scaffold;
 	private Cursor cursor;
 	private float pullTimer;
 	private boolean fail, spaceRelease, leaveState, success, digging;
@@ -40,6 +42,10 @@ public class WeedingState extends BasicGameState {
 	private Sound dig, pop;
 	private Music running;
 	private BigDecimal timeRounded;
+	private static int saveTest;
+	private Save save;
+
+
 	
 	
 	public WeedingState(int state) throws SlickException {
@@ -55,13 +61,13 @@ public class WeedingState extends BasicGameState {
 		startX = 32;
 		startY = 32;
 		
-		
+	
 		player = new Player(startX, startY);
 		
 		
-		dig = new Sound("res/digging.ogg");
-		pop = new Sound("res/pop.ogg");
-		running = new Music("res/Running.ogg");
+		dig = new Sound("res/audio/digging.ogg");
+		pop = new Sound("res/audio/pop.ogg");
+		running = WeedingMusic.getWeeding();
 		
 		leaveState = false;
 		pullTimer = 0;
@@ -73,9 +79,14 @@ public class WeedingState extends BasicGameState {
 		currentMap = new CurrentMap(gc);
 		
 		plantFrame = new Image("res/plantFrame.png", false, Image.FILTER_NEAREST);
-		leaf = new Image("res/leaf.png", false, Image.FILTER_NEAREST);
+		
+		/*leaf = new Image("res/leaf.png", false, Image.FILTER_NEAREST);
 		dandelion = new Image("res/dandelion.png", false, Image.FILTER_NEAREST);
-		clock = new Image("res/clock.png", false, Image.FILTER_NEAREST);
+		clock = new Image("res/clock.png", false, Image.FILTER_NEAREST);*/
+		
+		leaf = ImageResources.getLeaf();
+		dandelion = ImageResources.getDandelion();
+		clock = ImageResources.getClock();
 		
 		map = CurrentMap.getCurrentMap();
 		
@@ -87,7 +98,7 @@ public class WeedingState extends BasicGameState {
 		fail = false;
 		success = false;
 		
-		
+		save = new Save();
 
 	}
 
@@ -107,25 +118,25 @@ public class WeedingState extends BasicGameState {
 			map.getSpecies().get(i).getImage().draw(8 + i * 24, 4);
 		}
 		
-		dandelion.draw(gc.getWidth()/4 - 160 - 20, 4);
-		font.draw("" + weedTotal, gc.getWidth()/4 - 160, 10, Color.white);
+		dandelion.draw(gc.getWidth()/gScale - 160 - 20, 4);
+		font.draw("" + weedTotal, gc.getWidth()/gScale - 160, 10, Color.white);
 		
 		for(int i = 0; i < penalty; i++){
-			leaf.draw(gc.getWidth()/4 - 128 + (i * 16), 4);
+			leaf.draw(gc.getWidth()/gScale - 128 + (i * 16), 4);
 		}
 		
 		BigDecimal timeRounded = new BigDecimal(map.getTime());
 		timeRounded = timeRounded.setScale(1, BigDecimal.ROUND_UP);
 		
-		clock.draw(gc.getWidth()/4 - 64, 4);
-		font.draw("" + timeRounded, gc.getWidth()/4 - 46, 10, Color.white);
+		clock.draw(gc.getWidth()/gScale - 64, 4);
+		font.draw("" + timeRounded, gc.getWidth()/gScale - 46, 10, Color.white);
 		
 		//font.draw("" + penalty, gc.getWidth()/4 - 96, 10, Color.white);
 		
 		
 		
-		if(fail)font.draw("Fail!  Press Enter", gc.getWidth()/8 - 64, gc.getHeight()/8 - 8, Color.red);
-		if(success)font.draw("Success!  Press Enter", gc.getWidth()/8 - 64, gc.getHeight()/8 - 8, Color.white);
+		if(fail)font.draw("Fail!  Press Enter", gc.getWidth()/gScale/2 - 64, gc.getHeight()/gScale/2 - 8, Color.red);
+		if(map.getWeedsLeft() == 0)font.draw("Success!  Press Enter", gc.getWidth()/gScale/2 - 64, gc.getHeight()/gScale/2 - 8, Color.white);
 		
 		
 	}
@@ -134,10 +145,15 @@ public class WeedingState extends BasicGameState {
 		
 		if(!running.playing())running.play(1f, 0.5f);
 		
+		System.out.println(success);
 	
 		
 		Input input = gc.getInput();
 		
+		
+		if(input.isKeyPressed(Input.KEY_P)){
+			saveTest += 1;
+		}
 		Plant[] plantArray = map.getPlantArray();
 	
 		int remX = Player.getX()%16;
@@ -147,16 +163,16 @@ public class WeedingState extends BasicGameState {
 		int columns = map.getColumns();
 		int buffer = TileSize.buffer;
 		
+
 		
-		
-		if(input.isKeyPressed(Input.KEY_SPACE)){
-			digging = true;
-		}
 		if(input.isKeyDown(Input.KEY_SPACE)){
 			
 			pullTimer += delta * 0.005;
-
+			digging = true;
 			//add restriction for top and bottom of screen
+			
+			if(Player.isMoving()) pullTimer = 0;
+			
 			
 			if(pullTimer > map.getPlantResistance(playerX - buffer, playerY - buffer) ){
 				if(playerY >= buffer && (playerY - buffer) < map.getRows() && playerX >= buffer && (playerX - buffer) < map.getColumns()){
@@ -197,7 +213,7 @@ public class WeedingState extends BasicGameState {
 		
 		//weed counter
 		
-		ArrayList<Plant> species = map.getSpecies();
+		/*ArrayList<Plant> species = map.getSpecies();
 		int check = 0;
 		int count = 0;
 	
@@ -214,10 +230,13 @@ public class WeedingState extends BasicGameState {
 		
 			weedTotal = count;
 		
-		}
+		}*/
 		
-		if(weedTotal == 0)success = true;
-			
+		weedTotal = map.getWeedsLeft();
+		
+		/*if(weedTotal == 0)success = true;
+			else success = false;*/
+		
 		if(penalty ==0)fail = true;
 		
 		if(	map.getTime() <= 0){
@@ -234,11 +253,19 @@ public class WeedingState extends BasicGameState {
 			
 		}
 		
-		if(success && input.isKeyPressed(Input.KEY_ENTER)){
+		if(map.getWeedsLeft() == 0 && input.isKeyPressed(Input.KEY_ENTER)){
+			//weedTotal = 1;
+			Progress.unlock(map.getID() + 1);
+			try {
+				save.SaveGame();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			sb.enterState(1);
 			leaveState = true;
-			weedTotal = 1;
-			success = false;
+			
+			//success = false;
 		}
 		
 		if(leaveState){
@@ -252,7 +279,7 @@ public class WeedingState extends BasicGameState {
 			
 		}
 		
-		if(!fail && !success){
+		if(!fail && map.getWeedsLeft() > 0){
 			player.update(gc, delta);
 			
 			map.update(delta);
@@ -261,6 +288,10 @@ public class WeedingState extends BasicGameState {
 		if(fail)map.setPause(true);
 		else map.setPause(false);
 		
+	}
+	
+	public static int getSaveTest(){
+		return saveTest;
 	}
 
 	@Override

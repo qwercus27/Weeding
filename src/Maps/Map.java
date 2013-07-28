@@ -20,6 +20,7 @@ import Plants.Rumex;
 import Plants.Schizachyrium;
 import Plants.Taraxacum;
 import Plants.Tradescantia;
+import Weeding.ImageResources;
 import Weeding.TileSize;
 
 
@@ -27,13 +28,15 @@ public class Map {
 
 	int tileSize, gScale, tileTotal, columns, rows, x, y, buffer;
 	protected double time, timeLimit;
-	protected int weedCounter, nonWeedCounter, numWeeds, nonWeeds;
+	protected int weedCounter, nonWeedCounter, numWeeds, nonWeeds, mapID;
+	private int weedsLeft;
 	protected Plant[] plantArray;
 	protected static ArrayList<Plant> speciesList;
 	protected Random random;
 	protected boolean pause;
 	private Image background, ground0, ground1, ground2, ground3, ground4, ground5, ground6, ground7, ground8;
 	private SpriteSheet groundSheet;
+	private Image[] ground;
 	
 	
 	
@@ -47,6 +50,8 @@ public class Map {
 		
 		x = 0;
 		y = 0;
+		
+		weedsLeft = 10;
 		
 		
 		
@@ -65,11 +70,25 @@ public class Map {
 		
 		speciesList = new ArrayList<Plant>();
 		
-		groundSheet = new SpriteSheet("res/ground.png", 16, 16);
+		//groundSheet = new SpriteSheet("res/ground.png", 16, 16);
 		
-		background = new Image("res/dirt.png", false, Image.FILTER_NEAREST);
+		//background = new Image("res/dirt.png", false, Image.FILTER_NEAREST);
 		
-		ground0 = groundSheet.getSprite(1, 1); //center
+		background = ImageResources.getDirt();
+		
+		ground = ImageResources.getGround();
+		
+		ground0 = ground[0]; //center
+		ground1 = ground[1]; //top left
+		ground2 = ground[2]; //top
+		ground3 = ground[3]; //top right
+		ground4 = ground[4]; //left
+		ground5 = ground[5]; //right
+		ground6 = ground[6]; //bottom left
+		ground7 = ground[7]; //bottom
+		ground8 = ground[8]; //bottom right
+		
+		/*ground0 = groundSheet.getSprite(1, 1); //center
 		ground1 = groundSheet.getSprite(0, 0); //top left
 		ground2 = groundSheet.getSprite(1, 0); //top
 		ground3 = groundSheet.getSprite(2, 0); //top right
@@ -77,7 +96,9 @@ public class Map {
 		ground5 = groundSheet.getSprite(2, 1); //right
 		ground6 = groundSheet.getSprite(0, 2); //bottom left
 		ground7 = groundSheet.getSprite(1, 2); //bottom
-		ground8 = groundSheet.getSprite(2, 2); //bottom right
+		ground8 = groundSheet.getSprite(2, 2); //bottom right*/
+		
+		
 		
 		
 		
@@ -120,12 +141,12 @@ public class Map {
 			
 			for(int i = 0; i < columns + (buffer * 2); i++){
 				ground0.draw(i * tileSize, b * 16);
-				ground0.draw(i * tileSize, gc.getHeight()/4 - 16 - (b * 16));
+				ground0.draw(i * tileSize, gc.getHeight()/gScale - 16 - (b * 16));
 			}
 			
 			for(int i = 0; i < rows + (buffer * 2); i++){
 				ground0.draw(b * 16, i * tileSize);
-				ground0.draw(gc.getWidth()/4 - 16 - (b*16), i * 16);
+				ground0.draw(gc.getWidth()/gScale - 16 - (b*16), i * 16);
 				
 			}
 		}
@@ -365,6 +386,23 @@ public class Map {
 			
 
 		}
+		
+		int check = 0;
+		int count = 0;
+		
+			for(int i = 0; i < tileTotal; i++){
+				
+				for(int j = 0; j < speciesList.size(); j++){
+					
+					if(plantArray[i].getPlantID() == speciesList.get(j).getPlantID())check += 1;  
+				}	
+				
+				if(check == 0 && plantArray[i].getPlantID() != 0)count += 1;
+				
+				check = 0;
+			
+				weedsLeft = count;
+		}
 	}
 	
 	public void removePlant(int xTile, int yTile) throws SlickException {
@@ -377,6 +415,10 @@ public class Map {
 			
 		} 
 		
+	}
+	
+	public int getWeedsLeft(){
+		return weedsLeft;
 	}
 	
 	public int getPlantID(int xTile, int yTile) throws SlickException {
@@ -447,5 +489,9 @@ public class Map {
 	
 	public static ArrayList<Plant> getSpecies(){
 		return speciesList;
+	}
+	
+	public int getID(){
+		return mapID;
 	}
 }

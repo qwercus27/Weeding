@@ -1,5 +1,7 @@
 package GameStates;
 
+import java.io.IOException;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,6 +14,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import Audio.WeedingMusic;
 import Maps.CurrentMap;
 import Weeding.Font;
+import Weeding.ImageResources;
+import Weeding.Progress;
+import Weeding.Save;
 import Weeding.TileSize;
 
 
@@ -20,9 +25,9 @@ public class LevelSelect extends BasicGameState {
 	
 	private int tileSize, gScale, cursorX, cursorY, selectedPlot;
 	private Font font;
-	private Image cursor, plot, path;
-	private WeedingMusic wm;
-
+	private Image cursor, plot, path, lockedPlot;
+	private Progress progress;
+	private Save save;
 	
 	public LevelSelect(int state) {
 		
@@ -33,21 +38,35 @@ public class LevelSelect extends BasicGameState {
 		tileSize = TileSize.tileSize;
 		gScale = TileSize.gScale;
 		
-		cursor = new Image("res/cursorDark.png", false, Image.FILTER_NEAREST);
+		/*cursor = new Image("res/cursorDark.png", false, Image.FILTER_NEAREST);
 		plot = new Image("res/plot.png", false, Image.FILTER_NEAREST);
-		path = new Image("res/pathSmallWet.png", false, Image.FILTER_NEAREST);
+		path = new Image("res/pathSmallWet.png", false, Image.FILTER_NEAREST);*/
+		
+		cursor = ImageResources.getCursor();
+		plot = ImageResources.getPlot();
+		lockedPlot = ImageResources.getLockedPlot();
+		path = ImageResources.getPath();
 		
 		cursorX = 0;
 		cursorY = 0;
 		
-		font = new Font();
-		
-		wm = new WeedingMusic();		
+		font = new Font();	
 		
 		selectedPlot = cursorX + (cursorY * 6) ;
+		
+		progress = new Progress();
+		save = new Save();
+		
+		try {
+			save.Load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		
 		
 		g.scale(gScale, gScale);
 		g.setBackground(Color.white);
@@ -61,8 +80,8 @@ public class LevelSelect extends BasicGameState {
 		int pathX = 0;
 		int pathY = 0;
 		
-		int screenX = gc.getWidth()/16/4;
-		int screenY = gc.getHeight()/16/4;
+		int screenX = gc.getWidth()/16/gScale;
+		int screenY = gc.getHeight()/16/gScale;
 		
 		int grid = (16 * 8 * screenY);
 		
@@ -85,8 +104,9 @@ public class LevelSelect extends BasicGameState {
 		
 		int distance = 28;
 	
+		boolean[] locked = Progress.getLocked();
 		
-		for(int i = 0; i < 28; i++){
+		for(int i = 0; i < 24; i++){
 			
 			String num = new String("" + (i + 1));
 			numX += distance;
@@ -102,7 +122,11 @@ public class LevelSelect extends BasicGameState {
 			if(i == 10)numX -= 4;
 			if(i > 10 && i % 8 == 0)numX -= 4;
 			
-			plot.draw(28 + plotX, plotY );
+			
+				if(locked[i + 1] == true)lockedPlot.draw(28 + plotX, plotY);
+				if(locked[i + 1] == false) plot.draw(28 + plotX, plotY );
+			
+			
 			//font.draw(num, 32 + numX, numY, Color.white);
 		}
 		
@@ -114,7 +138,7 @@ public class LevelSelect extends BasicGameState {
 
 		for(int i = 0; i< CurrentMap.getCurrentMap().getSpecies().size(); i++){
 			
-				CurrentMap.getCurrentMap().getSpecies().get(i).getImage().draw(32 + (i * 32), gc.getHeight()/4 - 24);
+				CurrentMap.getCurrentMap().getSpecies().get(i).getImage().draw(32 + (i * 32), gc.getHeight()/gScale - 24);
 			}
 		
 	
@@ -122,7 +146,8 @@ public class LevelSelect extends BasicGameState {
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		
-		selectedPlot = cursorX + (cursorY * 6) + 1;
+		
+		selectedPlot = cursorX + (cursorY * 8) + 1;
 		
 
 		if(!WeedingMusic.getMenu().playing() && !WeedingMusic.getTitle().playing())WeedingMusic.getMenu().loop(1f, .5f);
@@ -137,6 +162,7 @@ public class LevelSelect extends BasicGameState {
 		
 		if(input.isKeyPressed(Input.KEY_D)){
 			cursorX += 1;
+			
 		}
 		
 		if(input.isKeyPressed(Input.KEY_W)){
@@ -148,8 +174,9 @@ public class LevelSelect extends BasicGameState {
 		}
 		
 		if(input.isKeyPressed(Input.KEY_ENTER)){
-	
-			sbg.enterState(0);
+			boolean[] locked = Progress.getLocked();
+			
+			if(locked[selectedPlot] == false)	sbg.enterState(0);
 		}
 		
 		if(input.isKeyPressed(Input.KEY_ESCAPE)){
