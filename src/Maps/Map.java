@@ -31,7 +31,7 @@ public class Map {
 	protected int weedCounter, nonWeedCounter, numWeeds, nonWeeds, mapID;
 	private int weedsLeft;
 	protected Plant[] plantArray;
-	protected static ArrayList<Plant> speciesList;
+	protected  ArrayList<Plant> speciesList;
 	protected Random random;
 	protected boolean pause;
 	private Image background, ground0, ground1, ground2, ground3, ground4, ground5, ground6, ground7, ground8;
@@ -487,7 +487,7 @@ public class Map {
 		plantArray[arrayIndex] = plant;
 	}
 	
-	public static ArrayList<Plant> getSpecies(){
+	public ArrayList<Plant> getSpecies(){
 		return speciesList;
 	}
 	

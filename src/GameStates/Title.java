@@ -25,7 +25,7 @@ public class Title extends BasicGameState {
 	private Font font;
 	private Image titleImage, tallImage, textFrame;
 	private Music titleMusic, menuMusic;
-	private boolean up, allUp, saveExists;
+	private boolean up, allUp, saveExists, allDown;
 	private float imageX, imageY, rate;
 	private String[] options;
 	private Color color, selected, unselected;
@@ -48,6 +48,7 @@ public class Title extends BasicGameState {
 		
 		up = false;
 		allUp = false;
+		allDown = true;
 		
 		yDiff = gc.getHeight()/gScale - tallImage.getHeight();
 		imageX = 0;
@@ -131,11 +132,11 @@ public class Title extends BasicGameState {
 		Input input = gc.getInput();
 		
 		
-		if(!up && input.isKeyPressed(Input.KEY_ENTER)){
+		if(allDown && input.isKeyPressed(Input.KEY_ENTER)){
 			up = true;
 			input.clearKeyPressedRecord();
 		}
-		if(up && input.isKeyPressed(Input.KEY_ENTER)){
+		if(allUp && input.isKeyPressed(Input.KEY_ENTER)){
 			
 			if(optionsSize == 5){
 				if(selection == 0){
@@ -165,14 +166,16 @@ public class Title extends BasicGameState {
 			
 		
 		
-		if(input.isKeyPressed(Input.KEY_ESCAPE)){
-			if(up) up = false;
+		if(allUp && input.isKeyPressed(Input.KEY_ESCAPE)){
+			up = false;
+			input.clearKeyPressedRecord();
 		}
 		
 		if(up){
 			if(imageY < 0 && imageY < yDiff/2){
 				rate += delta * 0.005;
 				imageY +=  rate;
+				allDown = false;
 			}
 			
 			if(imageY >= yDiff/2 && imageY < 0){
@@ -204,11 +207,12 @@ public class Title extends BasicGameState {
 			if(imageY <= yDiff){
 				imageY = yDiff;
 				rate = 0;
+				allDown = true;
 			}
 			
 		}
 		
-		if(up){
+		if(allUp){
 			if(input.isKeyPressed(Input.KEY_W)){
 				selection -= 1;
 			}
@@ -221,7 +225,7 @@ public class Title extends BasicGameState {
 			if(selection < 0)selection = optionsSize - 1;
 		}
 
-		
+		input.clearKeyPressedRecord();
 	}
 
 	
