@@ -19,10 +19,10 @@ public class Plot03 extends Map {
 		
 		mapID = 3;
 		
-		timeLimit = 15;
+		timeLimit = 20;
 		time = timeLimit;
 		
-		numWeeds = 6;
+		numWeeds = 5;
 		nonWeeds = 6;
 		weedCounter = 0;
 		nonWeedCounter = 0;

@@ -4,10 +4,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
 import Plants.Achillea;
-import Plants.AsclepiasS;
+import Plants.Andropogon;
 import Plants.BareGround;
 import Plants.Schizachyrium;
-import Plants.Tradescantia;
 
 public class Plot02 extends Map {
 
@@ -16,10 +15,10 @@ public class Plot02 extends Map {
 		
 		mapID = 2;
 		
-		timeLimit = 13;
+		timeLimit = 17;
 		time = timeLimit;
 		
-		numWeeds = 3;
+		numWeeds = 4;
 		nonWeeds = 4;
 		weedCounter = 0;
 		nonWeedCounter = 0;
@@ -35,7 +34,7 @@ public class Plot02 extends Map {
 			int temp = random.nextInt(tileTotal);
 			
 			if(plantArray[temp] == null && roll1 == 2){
-				plantArray[temp] = new AsclepiasS(2);
+				plantArray[temp] = new Schizachyrium(2);
 				
 				
 				weedCounter +=1;

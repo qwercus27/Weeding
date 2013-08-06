@@ -6,8 +6,9 @@ import org.newdawn.slick.SpriteSheet;
 
 public class ImageResources {
 
-	private static Image dandelion, leaf, clock, dirt, plot, bigPlot, lockedPlot, cursor, question;
-	private static Image[] sprite, ground, arrow;
+	private static Image dandelion, leaf, clock, dirt, plot, bigPlot, lockedPlot, cursor, question,
+		fail, success;
+	private static Image[] sprite, spritePull, ground, arrow;
 	private SpriteSheet sheet;
 	private Image sheetImage;
 	
@@ -30,45 +31,61 @@ public class ImageResources {
 		sprite[10] = sheet.getSprite(10,0);
 		sprite[11] = sheet.getSprite(11,0);
 		
+		spritePull = new Image[8];
+		spritePull[0] = sheet.getSprite(0,1);
+		spritePull[1] = sheet.getSprite(1,1);
+		spritePull[2] = sheet.getSprite(3,1);
+		spritePull[3] = sheet.getSprite(4,1);
+		spritePull[4] = sheet.getSprite(6,1);
+		spritePull[5] = sheet.getSprite(7,1);
+		spritePull[6] = sheet.getSprite(9,1);
+		spritePull[7] = sheet.getSprite(10,1);
 		
 		ground = new Image[9];
-		ground[0] = sheet.getSprite(1,2);
-		ground[1] = sheet.getSprite(0,1);
-		ground[2] = sheet.getSprite(1,1);
-		ground[3] = sheet.getSprite(2,1);
-		ground[4] = sheet.getSprite(0,2);
-		ground[5] = sheet.getSprite(2,2);
-		ground[6] = sheet.getSprite(0,3);
-		ground[7] = sheet.getSprite(1,3);
-		ground[8] = sheet.getSprite(2,3);
+		ground[0] = sheet.getSprite(1,3);
+		ground[1] = sheet.getSprite(0,2);
+		ground[2] = sheet.getSprite(1,2);
+		ground[3] = sheet.getSprite(2,2);
+		ground[4] = sheet.getSprite(0,3);
+		ground[5] = sheet.getSprite(2,3);
+		ground[6] = sheet.getSprite(0,4);
+		ground[7] = sheet.getSprite(1,4);
+		ground[8] = sheet.getSprite(2,4);
 		
-		dandelion = sheet.getSprite(3,1);
-		leaf = sheet.getSprite(4,1);
-		clock = sheet.getSprite(5,1);
+		dandelion = sheet.getSprite(3,2);
+		leaf = sheet.getSprite(4,2);
+		clock = sheet.getSprite(5,2);
 		
-		dirt = sheet.getSprite(3,2);
-		plot = sheet.getSprite(4,2);
-		bigPlot = sheet.getSubImage(128, 16, 64, 64);
-		lockedPlot = sheet.getSprite(6,2);
+		dirt = sheet.getSprite(3,3);
+		plot = sheet.getSprite(4,3);
+		bigPlot = sheet.getSubImage(128, 32, 64, 64);
+		lockedPlot = sheet.getSprite(6,3);
 		
-		question = sheet.getSubImage(112, 32, 16, 32);
+		question = sheet.getSubImage(112, 48, 16, 32);
 		
 		arrow = new Image[8];
-		arrow[0] = sheet.getSprite(0,4);
-		arrow[1] = sheet.getSprite(1,4);
-		arrow[2] = sheet.getSprite(2,4);
-		arrow[3] = sheet.getSprite(3,4);
-		arrow[4] = sheet.getSprite(4,4);
-		arrow[5] = sheet.getSprite(5,4);
-		arrow[6] = sheet.getSprite(6,4);
-		arrow[7] = sheet.getSprite(7,4);
+		arrow[0] = sheet.getSprite(0,5);
+		arrow[1] = sheet.getSprite(1,5);
+		arrow[2] = sheet.getSprite(2,5);
+		arrow[3] = sheet.getSprite(3,5);
+		arrow[4] = sheet.getSprite(4,5);
+		arrow[5] = sheet.getSprite(5,5);
+		arrow[6] = sheet.getSprite(6,5);
+		arrow[7] = sheet.getSprite(7,5);
 		
-		cursor = sheet.getSprite(3,3);
+		cursor = sheet.getSprite(3,4);
+		
+		fail = new Image("res/fail.png");
+		success = new Image("res/success.png");
 		
 	}
 	
 	public static Image[] getSprite(){
 		return sprite;
+	}
+	
+	public static Image[] getSpritePull(){
+		return spritePull;
 	}
 	
 	public static Image[] getGround(){
@@ -117,5 +134,13 @@ public class ImageResources {
 	
 	public static Image getCursor(){
 		return cursor;
+	}
+	
+	public static Image getFail(){
+		return fail;
+	}
+	
+	public static Image getSuccess(){
+		return success;
 	}
 }

@@ -118,8 +118,8 @@ public class WeedingState extends BasicGameState {
 			map.getSpecies().get(i).getImage().draw(8 + i * 24, 4);
 		}
 		
-		dandelion.draw(gc.getWidth()/gScale - 160 - 20, 4);
-		font.draw("" + weedTotal, gc.getWidth()/gScale - 160, 10, Color.white);
+		dandelion.draw(gc.getWidth()/gScale - 145 - 20, 4);
+		font.draw("" + weedTotal, gc.getWidth()/gScale - 145, 10, Color.white);
 		
 		for(int i = 0; i < penalty; i++){
 			leaf.draw(gc.getWidth()/gScale - 128 + (i * 16), 4);
@@ -134,9 +134,12 @@ public class WeedingState extends BasicGameState {
 		//font.draw("" + penalty, gc.getWidth()/4 - 96, 10, Color.white);
 		
 		
-		
-		if(fail)font.draw("Fail!  Press Enter", gc.getWidth()/gScale/2 - 64, gc.getHeight()/gScale/2 - 8, Color.red);
-		if(map.getWeedsLeft() == 0)font.draw("Success!  Press Enter", gc.getWidth()/gScale/2 - 64, gc.getHeight()/gScale/2 - 8, Color.white);
+		int w2 = gc.getWidth()/gScale/2;
+		int h2 = gc.getHeight()/gScale/2;
+		Image failImage = ImageResources.getFail();
+		Image success = ImageResources.getSuccess();
+		if(fail)failImage.draw(w2 - failImage.getWidth()/2, h2 - failImage.getHeight()/2);
+		if(map.getWeedsLeft() == 0)success.draw(w2 - success.getWidth()/2, h2 - success.getHeight()/2);
 		
 		
 	}
@@ -145,7 +148,7 @@ public class WeedingState extends BasicGameState {
 		
 		if(!running.playing())running.play(1f, 0.5f);
 		
-		System.out.println(success);
+		System.out.println(map.getID());
 	
 		
 		Input input = gc.getInput();
@@ -165,33 +168,45 @@ public class WeedingState extends BasicGameState {
 		
 
 		
-		if(input.isKeyDown(Input.KEY_SPACE)){
+		if(input.isKeyDown(Input.KEY_SPACE) && !Player.isMoving() &&
+				playerY >= buffer && (playerY - buffer) < map.getRows() && 
+				playerX >= buffer && (playerX - buffer) < map.getColumns()){
+			
 			
 			pullTimer += delta * 0.005;
 			digging = true;
 			//add restriction for top and bottom of screen
 			
+			if(!map.isBare(playerX - buffer, playerY - buffer))player.setPull(true);
+			
+			
 			if(Player.isMoving()) pullTimer = 0;
 			
 			
+			
+			
 			if(pullTimer > map.getPlantResistance(playerX - buffer, playerY - buffer) ){
-				if(playerY >= buffer && (playerY - buffer) < map.getRows() && playerX >= buffer && (playerX - buffer) < map.getColumns()){
+				
 					
-					if(map.isWeed(playerX - buffer, playerY - buffer) && map.getPlantID(playerX - buffer, playerY - buffer) != 0){
-						penalty -= 1;
-					}
+				if(map.isWeed(playerX - buffer, playerY - buffer) && map.getPlantID(playerX - buffer, playerY - buffer) != 0){
+					penalty -= 1;
+				}
 					
-					//pop.play(1f, 0.25f);
-					digging = false;
-					map.removePlant(playerX - buffer, playerY - buffer);
-					pullTimer = 0;
-					spaceRelease = false;
+				//pop.play(1f, 0.25f);
+				digging = false;
+				map.removePlant(playerX - buffer, playerY - buffer);
+				pullTimer = 0;
+				spaceRelease = false;
+				player.setPull(false);
 					
 					
 				}
-			}
 			
-		}else digging = false;
+			
+		}else {
+			player.setPull(false);
+			digging = false;
+		}
 		
 		if(digging  && !dig.playing())	dig.play();
 		if(!digging)dig.stop();
@@ -262,7 +277,9 @@ public class WeedingState extends BasicGameState {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			sb.enterState(1);
+			
+			if(map.getID() == 25)sb.enterState(3);
+			else sb.enterState(1);
 			leaveState = true;
 			
 			//success = false;

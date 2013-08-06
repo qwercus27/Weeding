@@ -30,8 +30,8 @@ public class CurrentMap {
 		if(plotNum == 2)currentMap = new Plot02(gc);
 		if(plotNum == 3)currentMap = new Plot03(gc);
 		if(plotNum == 4)currentMap = new Plot04(gc);
-		if(plotNum == 5)currentMap = new Plot06(gc);
-		if(plotNum == 6)currentMap = new Plot05(gc);
+		if(plotNum == 5)currentMap = new Plot05(gc);
+		if(plotNum == 6)currentMap = new Plot06(gc);
 		if(plotNum == 7)currentMap = new Plot07(gc);
 		if(plotNum == 8)currentMap = new Plot08(gc);
 		if(plotNum == 9)currentMap = new Plot09(gc);
@@ -50,6 +50,7 @@ public class CurrentMap {
 		if(plotNum == 22)currentMap = new Plot22(gc);
 		if(plotNum == 23)currentMap = new Plot23(gc);
 		if(plotNum == 24)currentMap = new Plot24(gc);
+		if(plotNum == 25)currentMap = new Plot25(gc);
 		
 		
 		

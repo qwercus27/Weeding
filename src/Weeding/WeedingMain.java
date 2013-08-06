@@ -1,6 +1,5 @@
 package Weeding;
 import java.awt.AWTException;
-import java.io.IOException;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -8,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import Audio.WeedingMusic;
+import GameStates.Credits;
 import GameStates.LevelSelect;
 import GameStates.Title;
 import GameStates.WeedingState;
@@ -18,6 +18,7 @@ public class WeedingMain extends StateBasedGame {
 	public static final int weeding = 0;
 	public static final int levelSelect = 1;
 	public static final int title = 2;
+	public static final int credits = 3;
 	
 	public ImageResources iR;
 	public WeedingMusic wM;
@@ -30,7 +31,8 @@ public class WeedingMain extends StateBasedGame {
 		this.addState(new LevelSelect(levelSelect));
 		this.addState(new WeedingState(weeding));
 		this.addState(new Title(title));
-	
+		this.addState(new Credits(credits));
+		
 		this.enterState(title);
 		
 		
@@ -46,6 +48,7 @@ public class WeedingMain extends StateBasedGame {
 		iR = new ImageResources();
 		wM = new WeedingMusic();
 		s = new Save();
+		
 		
 	
 		

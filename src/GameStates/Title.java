@@ -26,7 +26,7 @@ public class Title extends BasicGameState {
 	private Image titleImage, tallImage, textFrame;
 	private Music titleMusic, menuMusic;
 	private boolean up, allUp, saveExists, allDown;
-	private float imageX, imageY, rate;
+	private float imageX, imageY, rate, startUp;
 	private String[] options;
 	private Color color, selected, unselected;
 	
@@ -37,6 +37,7 @@ public class Title extends BasicGameState {
 
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 	
+		
 		tileSize = TileSize.tileSize;
 		gScale = TileSize.gScale;
 		
@@ -44,7 +45,7 @@ public class Title extends BasicGameState {
 		tallImage = new Image("res/titleTall.png", false, Image.FILTER_NEAREST);
 		textFrame = new Image("res/textFrame.png", false, Image.FILTER_NEAREST);
 		
-		WeedingMusic.getTitle().play(1f, 0.5f);
+		WeedingMusic.getTitle().play(1f, 0.3f);
 		
 		up = false;
 		allUp = false;
@@ -59,7 +60,7 @@ public class Title extends BasicGameState {
 		saveExists = false;
 		
 		
-		
+		startUp = 0;
 	
 		unselected = new Color(Color.white);
 		selected = new Color(77, 162, 77);
@@ -117,10 +118,12 @@ public class Title extends BasicGameState {
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		
+		startUp += delta * 0.01;
+		
 		if(Save.exists())saveExists = true;
 		else saveExists = false;
 		
-		System.out.println(imageY);
+		System.out.println(up);
 			
 		if(!WeedingMusic.getTitle().playing()){
 			if(!WeedingMusic.getMenu().playing())WeedingMusic.getMenu().loop(1f, 0.5f);
@@ -132,7 +135,7 @@ public class Title extends BasicGameState {
 		Input input = gc.getInput();
 		
 		
-		if(allDown && input.isKeyPressed(Input.KEY_ENTER)){
+		if(allDown && input.isKeyPressed(Input.KEY_ENTER ) && startUp > 5){
 			up = true;
 			input.clearKeyPressedRecord();
 		}
@@ -172,13 +175,13 @@ public class Title extends BasicGameState {
 		}
 		
 		if(up){
-			if(imageY < 0 && imageY < yDiff/2){
+			if(imageY < 0 && imageY < yDiff/2 + 4){
 				rate += delta * 0.005;
 				imageY +=  rate;
 				allDown = false;
 			}
 			
-			if(imageY >= yDiff/2 && imageY < 0){
+			if(imageY >= yDiff/2 + 4 && imageY < 0){
 				rate -= delta * 0.005;
 				imageY += rate;
 			}
@@ -192,13 +195,13 @@ public class Title extends BasicGameState {
 		
 		if(!up){
 			
-			if(imageY > yDiff && imageY > yDiff/2){
+			if(imageY > yDiff && imageY > yDiff/2 - 4){
 				rate += delta * 0.005;
 				imageY -= rate;
 				allUp = false;
 			}
 			
-			if(imageY <= yDiff/2 && imageY > yDiff){
+			if(imageY <= yDiff/2 - 4 && imageY > yDiff){
 				rate -= delta * 0.005;
 				imageY -= rate;
 				
@@ -213,11 +216,11 @@ public class Title extends BasicGameState {
 		}
 		
 		if(allUp){
-			if(input.isKeyPressed(Input.KEY_W)){
+			if(input.isKeyPressed(Input.KEY_W) || input.isKeyPressed(Input.KEY_UP)){
 				selection -= 1;
 			}
 			
-			if(input.isKeyPressed(Input.KEY_S)){
+			if(input.isKeyPressed(Input.KEY_S) || input.isKeyPressed(Input.KEY_DOWN)){
 				selection += 1;
 			}
 			

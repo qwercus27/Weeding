@@ -23,8 +23,8 @@ public class RetrieveMap {
 		if(plotNum == 2)map = new Plot02(gc);
 		if(plotNum == 3)map = new Plot03(gc);
 		if(plotNum == 4)map = new Plot04(gc);
-		if(plotNum == 5)map = new Plot06(gc);
-		if(plotNum == 6)map = new Plot05(gc);
+		if(plotNum == 5)map = new Plot05(gc);
+		if(plotNum == 6)map = new Plot06(gc);
 		if(plotNum == 7)map = new Plot07(gc);
 		if(plotNum == 8)map = new Plot08(gc);
 		if(plotNum == 9)map = new Plot09(gc);

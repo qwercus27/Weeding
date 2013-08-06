@@ -3,48 +3,51 @@ package Maps;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
+import Plants.Achillea;
 import Plants.Andropogon;
 import Plants.AsclepiasS;
 import Plants.AsclepiasT;
 import Plants.BareGround;
 import Plants.Lupinus;
 import Plants.Panicum;
-import Plants.Schizachyrium;
+import Plants.Rumex;
 import Plants.Taraxacum;
 import Plants.Tradescantia;
 
-public class Plot20 extends Map {
+public class Plot25 extends Map {
 
-	public Plot20(GameContainer gc) throws SlickException {
+	public Plot25(GameContainer gc) throws SlickException {
 		super(gc);
 		
-		mapID = 20;
+		mapID = 25;
 		
-		timeLimit = 108;
+		timeLimit = 150;
 		time = timeLimit;
 		
-		numWeeds = 36;
-		nonWeeds = 39;
+		numWeeds = 50;
+		nonWeeds = 48;
 		weedCounter = 0;
 		nonWeedCounter = 0;
 		
 		speciesList.add(0, new Tradescantia(2));
-		speciesList.add(1, new AsclepiasS(2));
-		speciesList.add(2, new Panicum(2));
-		speciesList.add(3, new AsclepiasT(2));
+		speciesList.add(1, new Panicum(2));
+		speciesList.add(2, new Lupinus(2));
+		speciesList.add(3, new AsclepiasS(2));
 		
 		//Weeds
 		
 		for(int i = 0; i < (tileTotal); i++){
 			int roll1 = random.nextInt(10);
-			int roll2 = random.nextInt(4);
+			int roll2 = random.nextInt(6);
 			int temp = random.nextInt(tileTotal);
 			
 			if(plantArray[temp] == null && roll1 == 2){
-				if(roll2 == 0) plantArray[temp] = new Schizachyrium(2);
-				if(roll2 == 1) plantArray[temp] = new Andropogon(2);
-				if(roll2 == 2) plantArray[temp] = new Lupinus(2);
-				if(roll2 == 3) plantArray[temp] = new Taraxacum(2);
+				if(roll2 == 0) plantArray[temp] = new Andropogon(2);
+				if(roll2 == 1) plantArray[temp] = new Lupinus(2);
+				if(roll2 == 2) plantArray[temp] = new Taraxacum(2);
+				if(roll2 == 3) plantArray[temp] = new Achillea(2);
+				if(roll2 == 4) plantArray[temp] = new Rumex(2);
+				if(roll2 == 5) plantArray[temp] = new AsclepiasT(2);
 				
 				weedCounter +=1;
 				
@@ -60,15 +63,16 @@ public class Plot20 extends Map {
 		
 		for(int i = 0; i < (tileTotal); i++){
 			int roll1 = random.nextInt(10);
-			int roll2 = random.nextInt(4);
+			int roll2 = random.nextInt(3);
 		
 			int temp = random.nextInt(tileTotal);
 			
-			if(plantArray[temp] == null && roll1 == 2){
+			if(plantArray[temp] == null && roll1 == 3){
 				if(roll2 == 0) plantArray[temp] = new Tradescantia(2);
-				if(roll2 == 1) plantArray[temp] = new AsclepiasS(2);			
-				if(roll2 == 2) plantArray[temp] = new Panicum(2);		
-				if(roll2 == 3) plantArray[temp] = new AsclepiasT(2);		
+				if(roll2 == 1) plantArray[temp] = new Panicum(2);		
+				if(roll2 == 2) plantArray[temp] = new Lupinus(2);
+				if(roll2 == 3) plantArray[temp] = new AsclepiasS(2);
+				
 				
 				nonWeedCounter +=1;
 				

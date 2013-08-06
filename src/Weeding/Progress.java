@@ -15,7 +15,7 @@ public class Progress implements Serializable{
 
 	public Progress(){
 		
-		locked = new boolean[25];
+		locked = new boolean[30];
 		
 		locked[0] = false;
 		locked[1] = false;

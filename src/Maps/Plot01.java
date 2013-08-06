@@ -3,10 +3,7 @@ package Maps;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
-import Plants.Schizachyrium;
-import Plants.Andropogon;
-import Plants.Tradescantia;
-import Plants.AsclepiasS;
+import Plants.Achillea;
 import Plants.BareGround;
 
 public class Plot01 extends Map {
@@ -16,7 +13,7 @@ public class Plot01 extends Map {
 		
 		mapID = 1;
 		
-		timeLimit = 10;
+		timeLimit = 15;
 		time = timeLimit;
 		
 		numWeeds = 3;
@@ -32,7 +29,7 @@ public class Plot01 extends Map {
 			int temp = random.nextInt(tileTotal);
 			
 			if(plantArray[temp] == null && roll1 == 2){
-				plantArray[temp] = new Andropogon(2);
+				plantArray[temp] = new Achillea(2);
 				
 				weedCounter +=1;
 				

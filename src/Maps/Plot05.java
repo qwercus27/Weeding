@@ -3,10 +3,12 @@ package Maps;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 
+import Plants.Achillea;
 import Plants.Andropogon;
 import Plants.BareGround;
-import Plants.Panicum;
+import Plants.Lupinus;
 import Plants.Schizachyrium;
+import Plants.Taraxacum;
 import Plants.Tradescantia;
 
 public class Plot05 extends Map {
@@ -16,16 +18,18 @@ public class Plot05 extends Map {
 		
 		mapID = 5;
 		
-		timeLimit = 40;
+		timeLimit = 21;
 		time = timeLimit;
 		
-		numWeeds = 1;
-		nonWeeds = 4;
+		numWeeds = 7;
+		nonWeeds = 12;
 		weedCounter = 0;
 		nonWeedCounter = 0;
 		
 		speciesList.add(0, new Tradescantia(2));
 		speciesList.add(1, new Schizachyrium(2));
+		speciesList.add(2, new Achillea(2));
+		speciesList.add(3, new Lupinus(2));
 		
 		//Weeds
 		
@@ -35,7 +39,7 @@ public class Plot05 extends Map {
 			int temp = random.nextInt(tileTotal);
 			
 			if(plantArray[temp] == null && roll1 == 2){
-				plantArray[temp] = new Andropogon(2);
+				plantArray[temp] = new Taraxacum(2);
 				
 				weedCounter +=1;
 				
@@ -51,13 +55,15 @@ public class Plot05 extends Map {
 		
 		for(int i = 0; i < (tileTotal); i++){
 			int roll1 = random.nextInt(10);
-			int roll2 = random.nextInt(10);
+			int roll2 = random.nextInt(4);
 		
 			int temp = random.nextInt(tileTotal);
 			
 			if(plantArray[temp] == null && roll1 == 2){
-				if(roll2 == 2 ) plantArray[temp] = new Tradescantia(2);
-				if(roll2 == 3) plantArray[temp] = new Schizachyrium(2);				
+				if(roll2 == 0) plantArray[temp] = new Achillea(2);
+				if(roll2 == 1 ) plantArray[temp] = new Tradescantia(2);
+				if(roll2 == 2) plantArray[temp] = new Schizachyrium(2);		
+				if(roll2 == 3) plantArray[temp] = new Lupinus(2);
 				nonWeedCounter +=1;
 				
 			}

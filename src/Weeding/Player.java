@@ -16,39 +16,36 @@ public class Player {
 	private int tileSize = TileSize.tileSize, gScale = TileSize.gScale;
 	private static int yLocation, xLocation;
 	private float timer = 0;
-	private SpriteSheet spriteSheet;
-	private static boolean isRight, isLeft, isUp, isDown, isMoving;
-	private Animation rightStill, leftStill, upStill, downStill, right, left, up, down, sprite;
-	private Image[] downy, lefty, uppy, righty, down0, left0, up0, right0;
-	private Image[] res;
+	private static boolean isRight, isLeft, isUp, isDown, isMoving, isPull;
+	private Animation rightStill, leftStill, upStill, downStill, right, left, up, down, sprite,
+		pFront, pBack, pLeft, pRight;
+	private Image[] downy, lefty, uppy, righty, down0, left0, up0, right0, 
+		pullyFront, pullyBack, pullyLeft, pullyRight;
+	private Image[] spriteSheet, spritePull;
 	
 	
 	
 	public Player(int x, int y) throws SlickException{
 		
-		res = ImageResources.getSprite();
+		spriteSheet = ImageResources.getSprite();
+		spritePull = ImageResources.getSpritePull();
 		
-		//spriteSheet = new SpriteSheet("res/characterSprites.png", 16, 16);
 		
-		/*downy = new Image[]{spriteSheet.getSprite(1, 0), spriteSheet.getSprite(2, 0)};
-		lefty = new Image[]{spriteSheet.getSprite(4, 0), spriteSheet.getSprite(5, 0)};
-		uppy = new Image[]{spriteSheet.getSprite(7, 0), spriteSheet.getSprite(8, 0)};
-		righty = new Image[]{spriteSheet.getSprite(10, 0), spriteSheet.getSprite(11, 0)};
+		downy = new Image[]{spriteSheet[1], spriteSheet[2]};
+		lefty = new Image[]{spriteSheet[4], spriteSheet[5]};
+		uppy = new Image[]{spriteSheet[7], spriteSheet[8]};
+		righty = new Image[]{spriteSheet[10], spriteSheet[11]};
 		
-		down0 = new Image[]{spriteSheet.getSprite(0, 0)};
-		left0 = new Image[]{spriteSheet.getSprite(3, 0)};
-		up0 = new Image[]{spriteSheet.getSprite(6, 0)};
-		right0 = new Image[]{spriteSheet.getSprite(9, 0)};*/
+		down0 = new Image[]{spriteSheet[0]};
+		left0 = new Image[]{spriteSheet[3]};
+		up0 = new Image[]{spriteSheet[6]};
+		right0 = new Image[]{spriteSheet[9]};
 		
-		downy = new Image[]{res[1], res[2]};
-		lefty = new Image[]{res[4], res[5]};
-		uppy = new Image[]{res[7], res[8]};
-		righty = new Image[]{res[10], res[11]};
+		pullyFront = new Image[]{spritePull[0], spritePull[1]};
+		pullyLeft = new Image[]{spritePull[2], spritePull[3]};
+		pullyBack = new Image[]{spritePull[4], spritePull[5]};
+		pullyRight = new Image[]{spritePull[6], spritePull[7]};
 		
-		down0 = new Image[]{res[0]};
-		left0 = new Image[]{res[3]};
-		up0 = new Image[]{res[6]};
-		right0 = new Image[]{res[9]};
 		
 		right = new Animation(righty, 200);
 		left = new Animation(lefty, 200);
@@ -60,6 +57,11 @@ public class Player {
 		upStill = new Animation(up0, 200);
 		downStill = new Animation(down0, 200);
 		
+		pFront = new Animation(pullyFront, 400);
+		pBack = new Animation(pullyBack, 400);
+		pLeft = new Animation(pullyLeft, 400);
+		pRight = new Animation(pullyRight, 400);
+		
 		sprite = downStill;
 		
 		isUp = false;
@@ -68,6 +70,8 @@ public class Player {
 		isRight = false;
 		
 		isMoving = false;
+		
+		isPull = false;
 		
 		this.x = x;
 		this.y = y;
@@ -191,6 +195,7 @@ public class Player {
 					if(yLocation > 1)y -= tileSize;
 				}
 				one = true;
+				isPull = false;
 				
 				
 			}else one = false;
@@ -203,7 +208,7 @@ public class Player {
 				}
 			
 				two = true;
-				
+				isPull = false;
 				
 			
 			}else two = false;
@@ -216,7 +221,7 @@ public class Player {
 				}
 				
 				three = true;
-				
+				isPull = false;
 			
 			}else three = false;
 			
@@ -227,7 +232,7 @@ public class Player {
 				}
 				
 				four = true;
-				
+				isPull = false;
 			
 			
 			}else four = false;
@@ -244,7 +249,21 @@ public class Player {
 		if(isUp && !input.isKeyDown(Input.KEY_W) && !input.isKeyDown(Input.KEY_UP)) sprite = upStill;
 		if(isDown && !input.isKeyDown(Input.KEY_S) && !input.isKeyDown(Input.KEY_DOWN)) sprite = downStill;
 		
+		if(isPull){
+			if(isRight)sprite = pRight;
+			if(isLeft)sprite = pLeft;
+			if(isUp)sprite = pBack;
+			if(isDown)sprite = pFront;
+		}
+		
 	}
+	
+	public void setPull(boolean value){
+		 
+		isPull = value;
+	}
+	
+	
 	
 	public static int getYLocation(){
 		return yLocation;
@@ -297,5 +316,9 @@ public class Player {
 	
 	public static boolean isMoving(){
 		return isMoving;
+	}
+	
+	public static void setForward(){
+		isDown = true;
 	}
 }

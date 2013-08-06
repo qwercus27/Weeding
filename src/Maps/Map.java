@@ -439,6 +439,15 @@ public class Map {
 		else return false ;
 	}
 	
+	public boolean isBare(int xTile, int yTile) throws SlickException {
+		int sum = 0;
+		Plant temp = plantArray[(yTile * columns) + xTile];
+		
+		if(temp.getPlantID() == 0) return true;
+	
+		else return false ;
+	}
+	
 	public int getPlantResistance(int xTile, int yTile){
 		
 		try {

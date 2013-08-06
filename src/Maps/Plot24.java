@@ -9,9 +9,7 @@ import Plants.AsclepiasS;
 import Plants.AsclepiasT;
 import Plants.BareGround;
 import Plants.Lupinus;
-import Plants.Panicum;
 import Plants.Rumex;
-import Plants.Schizachyrium;
 import Plants.Taraxacum;
 import Plants.Tradescantia;
 
@@ -22,33 +20,72 @@ public class Plot24 extends Map {
 		
 		mapID = 24;
 		
-		speciesList.add(0, new Andropogon(2));
-		speciesList.add(1, new Schizachyrium(2));
-		speciesList.add(2, new Lupinus(2));
-
-		timeLimit = 3 * 60;
+		timeLimit = 132;
 		time = timeLimit;
 		
+		numWeeds = 44;
+		nonWeeds = 45;
+		weedCounter = 0;
+		nonWeedCounter = 0;
+		
+		speciesList.add(0, new AsclepiasT(2));
+		speciesList.add(1, new Rumex(2));
+		speciesList.add(2, new Achillea(2));
+		
+		//Weeds
+		
+		for(int i = 0; i < (tileTotal); i++){
+			int roll1 = random.nextInt(10);
+			int roll2 = random.nextInt(5);
+			int temp = random.nextInt(tileTotal);
+			
+			if(plantArray[temp] == null && roll1 == 2){
+				if(roll2 == 0) plantArray[temp] = new Andropogon(2);
+				if(roll2 == 1) plantArray[temp] = new Lupinus(2);
+				if(roll2 == 2) plantArray[temp] = new Taraxacum(2);
+				if(roll2 == 3) plantArray[temp] = new Tradescantia(2);
+				if(roll2 == 4) plantArray[temp] = new AsclepiasS(2);
+				
+				weedCounter +=1;
+				
+			}
+			
+			
+			if( i == tileTotal - 1 && weedCounter < numWeeds)i = 0;
+			if(weedCounter == numWeeds)i = tileTotal;
+			
+		}
+		
+		//non-weeds
+		
+		for(int i = 0; i < (tileTotal); i++){
+			int roll1 = random.nextInt(10);
+			int roll2 = random.nextInt(3);
+		
+			int temp = random.nextInt(tileTotal);
+			
+			if(plantArray[temp] == null && roll1 == 3){
+				if(roll2 == 0) plantArray[temp] = new AsclepiasT(2);
+				if(roll2 == 1) plantArray[temp] = new Rumex(2);		
+				if(roll2 == 2) plantArray[temp] = new Achillea(2);
+				
+				nonWeedCounter +=1;
+				
+			}
+			
+			
+			if( i == tileTotal - 1 && nonWeedCounter < nonWeeds)i = 0;
+			if(nonWeedCounter == nonWeeds)i = tileTotal;
+			
+		}
+		
 		for(int i = 0; i < tileTotal; i++){
-			
-	
-			
-			int roll = random.nextInt(11);
-			if(roll == 0)plantArray[i] = new BareGround();
-			if(roll == 1)plantArray[i] = new Andropogon(2);
-			if(roll == 2)plantArray[i] = new Schizachyrium(2);
-			if(roll == 3)plantArray[i] = new Lupinus(2);
-			if(roll == 4)plantArray[i] = new AsclepiasS(2);
-			if(roll == 5)plantArray[i] = new Tradescantia(2);
-			if(roll == 6)plantArray[i] = new Panicum(2);
-			if(roll == 7)plantArray[i] = new Rumex(2);
-			if(roll == 8)plantArray[i] = new Taraxacum(2);
-			if(roll == 9)plantArray[i] = new Achillea(2);
-			if(roll == 10)plantArray[i] = new AsclepiasT(2);
+			if(plantArray[i] == null)plantArray[i] = new BareGround();
+		}
 		
 		
 	}
 	
-	}
+
 
 }
