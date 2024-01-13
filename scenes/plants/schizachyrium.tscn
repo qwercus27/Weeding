@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccb54i0wlyg"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_hq7jr"]
+[ext_resource type="Script" path="res://scenes/plants/Schizachyrium.gd" id="2_0at56"]
+
+[node name="Schizachyrium" instance=ExtResource("1_hq7jr")]
+script = ExtResource("2_0at56")
+plantName = "Schizachyrium"
+plantNumber = 4
+weed = true
+strength = 4
+timerSpeed = 3
+resistance = 5

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5dd216xxbckr"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_lyfu4"]
+[ext_resource type="Script" path="res://scenes/plants/BareGround.gd" id="2_nfqjl"]
+
+[node name="BareGround" instance=ExtResource("1_lyfu4")]
+script = ExtResource("2_nfqjl")
+plantName = "BareGround"

@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://qstjovrtiyr7"]
+
+[ext_resource type="Script" path="res://scenes/level_select.gd" id="1_2re4y"]
+[ext_resource type="FontFile" uid="uid://c2kxr0jo1rvqq" path="res://res/textAllWhite.png" id="2_liqmb"]
+[ext_resource type="PackedScene" uid="uid://c2iqgcfxn1td2" path="res://scenes/big_plot.tscn" id="3_i8e3e"]
+[ext_resource type="Texture2D" uid="uid://y7nc8hftnoek" path="res://res/tileSheet.png" id="4_nmwkk"]
+[ext_resource type="AudioStream" uid="uid://byn5go4geq1be" path="res://res/audio/title.ogg" id="5_pkfsj"]
+[ext_resource type="AudioStream" uid="uid://bhu2sgv188af7" path="res://res/audio/menu.ogg" id="6_g6o6d"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u3lvb"]
+font = ExtResource("2_liqmb")
+
+[node name="LevelSelect" type="Node"]
+script = ExtResource("1_2re4y")
+metadata/_edit_horizontal_guides_ = [288.0]
+metadata/_edit_vertical_guides_ = [120.0, 408.0]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -1.0
+offset_right = 815.0
+offset_bottom = 576.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -156.0
+offset_top = 48.0
+offset_right = -52.0
+offset_bottom = 59.0
+grow_horizontal = 2
+scale = Vector2(3, 3)
+text = "Select a Plot"
+label_settings = SubResource("LabelSettings_u3lvb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BigPlot3" parent="." instance=ExtResource("3_i8e3e")]
+position = Vector2(408, 288)
+
+[node name="LeftArrow" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(291, 288)
+scale = Vector2(3, 3)
+texture = ExtResource("4_nmwkk")
+region_enabled = true
+region_rect = Rect2(32, 80, 16, 16)
+
+[node name="RightArrow" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(528, 288)
+scale = Vector2(3, 3)
+texture = ExtResource("4_nmwkk")
+region_enabled = true
+region_rect = Rect2(48, 80, 16, 16)
+
+[node name="ArrowTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_pkfsj")
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_g6o6d")
+
+[connection signal="timeout" from="ArrowTimer" to="." method="_on_arrow_timer_timeout"]
+[connection signal="finished" from="TitleMusic" to="." method="_on_title_music_finished"]

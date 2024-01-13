@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://dhpif6tunjvh0"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_to55o"]
+[ext_resource type="Script" path="res://Achillea.gd" id="2_pu1ep"]
+[ext_resource type="Texture2D" uid="uid://dsi22mftnufg8" path="res://res/plantSheet.png" id="3_evgoh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cteuq"]
+atlas = ExtResource("3_evgoh")
+region = Rect2(32, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsscr"]
+atlas = ExtResource("3_evgoh")
+region = Rect2(0, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aprod"]
+atlas = ExtResource("3_evgoh")
+region = Rect2(48, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddqdv"]
+atlas = ExtResource("3_evgoh")
+region = Rect2(16, 80, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nujy3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cteuq")
+}],
+"loop": true,
+"name": &"flower",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsscr")
+}],
+"loop": true,
+"name": &"seed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aprod")
+}],
+"loop": true,
+"name": &"seeding",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddqdv")
+}],
+"loop": true,
+"name": &"sprout",
+"speed": 5.0
+}]
+
+[node name="Achillea" instance=ExtResource("1_to55o")]
+script = ExtResource("2_pu1ep")
+weed = true
+rhizome = true
+perennial = true
+strength = 4
+resistance = 2
+timerSpeed = 3
+plantNumber = 6
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_nujy3")

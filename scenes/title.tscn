@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://bx8gary7c31wx"]
+
+[ext_resource type="Texture2D" uid="uid://vnfchrmosd4m" path="res://res/titleTall.png" id="1_o3hx7"]
+[ext_resource type="Script" path="res://scenes/title.gd" id="1_qhioe"]
+[ext_resource type="PackedScene" uid="uid://bo4abenkx2aft" path="res://scenes/title_button.tscn" id="2_3uisq"]
+[ext_resource type="AudioStream" uid="uid://byn5go4geq1be" path="res://res/audio/title.ogg" id="4_yjfn2"]
+[ext_resource type="AudioStream" uid="uid://bhu2sgv188af7" path="res://res/audio/menu.ogg" id="5_3icmf"]
+
+[node name="Title" type="Node"]
+script = ExtResource("1_qhioe")
+title_button_scene = ExtResource("2_3uisq")
+
+[node name="TallImage" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+offset_top = -624.0
+offset_right = 272.0
+offset_bottom = -224.0
+scale = Vector2(3, 3)
+texture = ExtResource("1_o3hx7")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(408, 288)
+
+[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_yjfn2")
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_3icmf")
+
+[connection signal="finished" from="TitleMusic" to="." method="_on_title_music_finished"]

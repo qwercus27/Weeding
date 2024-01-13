@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhpif6tunjvh0"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_to55o"]
+[ext_resource type="Script" path="res://scenes/plants/Achillea.gd" id="2_pu1ep"]
+
+[node name="Achillea" instance=ExtResource("1_to55o")]
+script = ExtResource("2_pu1ep")
+plantName = "Achillea"
+plantNumber = 6
+weed = true
+strength = 4
+timerSpeed = 3
+resistance = 2
+rhizome = true
+perennial = true

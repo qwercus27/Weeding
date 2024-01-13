@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: Weeding/lib/jars/slick.jar Weeding/lib/jars/lwjgl.jar
-Main-Class: Weeding.Weeding.WeedingMain
-

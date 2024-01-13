@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo4abenkx2aft"]
+
+[ext_resource type="FontFile" uid="uid://c2kxr0jo1rvqq" path="res://res/textAllWhite.png" id="1_aqp6j"]
+[ext_resource type="Texture2D" uid="uid://b8pht114ohcpr" path="res://res/textFrame.png" id="2_k0mt8"]
+[ext_resource type="Script" path="res://scenes/title_button.gd" id="3_buh61"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y4dbj"]
+
+[node name="TitleButton" type="Button"]
+texture_filter = 1
+offset_right = 8.0
+offset_bottom = 8.0
+scale = Vector2(3, 3)
+theme_override_colors/font_focus_color = Color(0.301961, 0.635294, 0.301961, 1)
+theme_override_fonts/font = ExtResource("1_aqp6j")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_y4dbj")
+text = "New Game"
+icon = ExtResource("2_k0mt8")
+flat = true
+icon_alignment = 1
+script = ExtResource("3_buh61")

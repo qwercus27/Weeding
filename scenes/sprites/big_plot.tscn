@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://x76vwgoxgnbm"]
+
+[ext_resource type="Texture2D" uid="uid://y7nc8hftnoek" path="res://res/tileSheet.png" id="1_gplx3"]
+
+[node name="BigPlot" type="Sprite2D"]
+texture = ExtResource("1_gplx3")
+region_enabled = true
+region_rect = Rect2(128, 32, 64, 64)

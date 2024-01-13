@@ -1,0 +1,135 @@
+[gd_scene load_steps=10 format=3 uid="uid://dmm1f5khqlor8"]
+
+[ext_resource type="Script" path="res://scenes/weeding_state.gd" id="1_bm65p"]
+[ext_resource type="PackedScene" uid="uid://dogyvh1cf6pe0" path="res://scenes/player.tscn" id="2_lp6rm"]
+[ext_resource type="Texture2D" uid="uid://y7nc8hftnoek" path="res://res/tileSheet.png" id="3_kjlln"]
+[ext_resource type="Texture2D" uid="uid://btfhea4rdib1e" path="res://res/plantFrame.png" id="4_53wqi"]
+[ext_resource type="FontFile" uid="uid://c2kxr0jo1rvqq" path="res://res/textAllWhite.png" id="4_bjayd"]
+[ext_resource type="Texture2D" uid="uid://bu7tghy77178p" path="res://res/fail.png" id="6_ir74i"]
+[ext_resource type="Texture2D" uid="uid://b6e7nqpufhj5x" path="res://res/success.png" id="7_rc5di"]
+[ext_resource type="AudioStream" uid="uid://ck8qoctey71o0" path="res://res/audio/Running.ogg" id="8_sr8dm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7pxok"]
+font = ExtResource("4_bjayd")
+
+[node name="WeedingState" type="Node"]
+process_mode = 3
+script = ExtResource("1_bm65p")
+
+[node name="Player" parent="." instance=ExtResource("2_lp6rm")]
+z_index = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+scale = Vector2(3, 3)
+transform = Transform2D(3, 0, 0, 3, 0, 0)
+
+[node name="Stopwatch" type="Sprite2D" parent="CanvasLayer"]
+texture_filter = 1
+position = Vector2(216, 12)
+texture = ExtResource("3_kjlln")
+region_enabled = true
+region_rect = Rect2(80, 32, 16, 16)
+
+[node name="Leaf" type="Sprite2D" parent="CanvasLayer"]
+texture_filter = 1
+position = Vector2(152, 12)
+texture = ExtResource("3_kjlln")
+region_enabled = true
+region_rect = Rect2(64, 32, 16, 16)
+
+[node name="Leaf2" type="Sprite2D" parent="CanvasLayer"]
+texture_filter = 1
+position = Vector2(168, 12)
+texture = ExtResource("3_kjlln")
+region_enabled = true
+region_rect = Rect2(64, 32, 16, 16)
+
+[node name="Leaf3" type="Sprite2D" parent="CanvasLayer"]
+texture_filter = 1
+position = Vector2(184, 12)
+texture = ExtResource("3_kjlln")
+region_enabled = true
+region_rect = Rect2(64, 32, 16, 16)
+
+[node name="Dandelion" type="Sprite2D" parent="CanvasLayer"]
+texture_filter = 1
+position = Vector2(113, 12)
+texture = ExtResource("3_kjlln")
+region_enabled = true
+region_rect = Rect2(48, 32, 16, 16)
+
+[node name="PlantFrame" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+texture_filter = 1
+position = Vector2(16, 12)
+texture = ExtResource("4_53wqi")
+region_rect = Rect2(64, 48, 16, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/PlantFrame"]
+
+[node name="PlantFrame2" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+texture_filter = 1
+position = Vector2(40, 12)
+texture = ExtResource("4_53wqi")
+region_rect = Rect2(64, 48, 16, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/PlantFrame2"]
+
+[node name="PlantFrame3" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+texture_filter = 1
+position = Vector2(64, 12)
+texture = ExtResource("4_53wqi")
+region_rect = Rect2(64, 48, 16, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/PlantFrame3"]
+
+[node name="PlantFrame4" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+texture_filter = 1
+position = Vector2(88, 12)
+texture = ExtResource("4_53wqi")
+region_rect = Rect2(64, 48, 16, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/PlantFrame4"]
+
+[node name="TimeLeft" type="Label" parent="CanvasLayer"]
+texture_filter = 1
+offset_left = 224.667
+offset_top = 8.0
+offset_right = 264.667
+offset_bottom = 19.0
+text = "100.0"
+label_settings = SubResource("LabelSettings_7pxok")
+
+[node name="WeedsLeft" type="Label" parent="CanvasLayer"]
+texture_filter = 1
+offset_left = 120.0
+offset_top = 8.66667
+offset_right = 142.0
+offset_bottom = 19.6667
+text = "48"
+label_settings = SubResource("LabelSettings_7pxok")
+horizontal_alignment = 1
+
+[node name="Fail" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+position = Vector2(136, 96)
+texture = ExtResource("6_ir74i")
+
+[node name="Success" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+texture_filter = 1
+position = Vector2(136, 96)
+texture = ExtResource("7_rc5di")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_sr8dm")
+autoplay = true
+
+[connection signal="pulled_plant" from="Player" to="." method="_on_player_pulled_plant"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

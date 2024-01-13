@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5gkm71fkmhnn"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_25qre"]
+[ext_resource type="Script" path="res://scenes/plants/Andropogon.gd" id="2_s2lek"]
+
+[node name="Andropogon" instance=ExtResource("1_25qre")]
+script = ExtResource("2_s2lek")
+plantName = "Andropogon"
+plantNumber = 1
+strength = 1
+resistance = 4
+rhizome = true
+perennial = true

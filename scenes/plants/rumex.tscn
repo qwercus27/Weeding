@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1xxhpnmsveqy"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_tsmh4"]
+[ext_resource type="Script" path="res://scenes/plants/Rumex.gd" id="2_08xn2"]
+
+[node name="Rumex" instance=ExtResource("1_tsmh4")]
+script = ExtResource("2_08xn2")
+plantName = "Rumex"
+plantNumber = 7
+weed = true
+strength = 4
+timerSpeed = 3
+resistance = 1
+rhizome = true

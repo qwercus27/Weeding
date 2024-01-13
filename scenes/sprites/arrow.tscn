@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://bj4hn06vsq5fq"]
+
+[ext_resource type="Texture2D" uid="uid://y7nc8hftnoek" path="res://res/tileSheet.png" id="1_jmoua"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70w35"]
+atlas = ExtResource("1_jmoua")
+region = Rect2(32, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ta33"]
+atlas = ExtResource("1_jmoua")
+region = Rect2(96, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4llli"]
+atlas = ExtResource("1_jmoua")
+region = Rect2(48, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpy3b"]
+atlas = ExtResource("1_jmoua")
+region = Rect2(112, 80, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_03t6c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70w35")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ta33")
+}],
+"loop": true,
+"name": &"left_selected",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4llli")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpy3b")
+}],
+"loop": true,
+"name": &"right_selected",
+"speed": 5.0
+}]
+
+[node name="Arrow" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_03t6c")
+animation = &"left"

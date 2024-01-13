@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvosvcw3nknpv"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_mllpf"]
+[ext_resource type="Script" path="res://scenes/plants/Taraxacum.gd" id="2_yk42w"]
+
+[node name="Taraxacum" instance=ExtResource("1_mllpf")]
+script = ExtResource("2_yk42w")
+plantName = "Taraxacum"
+plantNumber = 8
+weed = true
+strength = 4
+timerSpeed = 3
+resistance = 3

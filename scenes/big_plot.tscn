@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2iqgcfxn1td2"]
+
+[ext_resource type="Texture2D" uid="uid://cluatsm7lwaui" path="res://res/plot.png" id="1_lpg8g"]
+[ext_resource type="FontFile" uid="uid://c2kxr0jo1rvqq" path="res://res/textAllWhite.png" id="2_0uugi"]
+[ext_resource type="Texture2D" uid="uid://y7nc8hftnoek" path="res://res/tileSheet.png" id="3_3a2vq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qccqx"]
+font = ExtResource("2_0uugi")
+
+[node name="BigPlot" type="Node2D"]
+texture_filter = 1
+scale = Vector2(3, 3)
+
+[node name="PlotSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_lpg8g")
+
+[node name="Plant1" type="Sprite2D" parent="."]
+position = Vector2(-8, -8)
+
+[node name="Plant2" type="Sprite2D" parent="."]
+position = Vector2(8, -8)
+
+[node name="Plant3" type="Sprite2D" parent="."]
+position = Vector2(-8, 8)
+
+[node name="Plant4" type="Sprite2D" parent="."]
+position = Vector2(8, 8)
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+offset_left = -9.33333
+offset_top = 17.3333
+offset_right = 8.66667
+offset_bottom = 28.3333
+label_settings = SubResource("LabelSettings_qccqx")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuestionMark" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_3a2vq")
+region_enabled = true
+region_rect = Rect2(112, 48, 16, 32)

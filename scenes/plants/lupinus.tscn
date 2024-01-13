@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bug8tmjhsu8ci"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_y1jqn"]
+[ext_resource type="Script" path="res://scenes/plants/Lupinus.gd" id="2_pl2c5"]
+
+[node name="Lupinus" instance=ExtResource("1_y1jqn")]
+script = ExtResource("2_pl2c5")
+plantName = "Lupinus"
+plantNumber = 9
+weed = true
+strength = 4
+timerSpeed = 3
+resistance = 4
+perennial = true

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf76lrpik3bei"]
+
+[ext_resource type="Script" path="res://Node.gd" id="1_8mbx4"]
+
+[node name="CurrentMap" type="Node"]
+script = ExtResource("1_8mbx4")

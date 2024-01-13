@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddv6m57g2fxk3"]
+
+[ext_resource type="Script" path="res://scenes/plants/plant.gd" id="1_ry3we"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_80dfd"]
+size = Vector2(4, 4)
+
+[node name="Plant" type="Area2D"]
+process_mode = 1
+scale = Vector2(3, 3)
+script = ExtResource("1_ry3we")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_80dfd")

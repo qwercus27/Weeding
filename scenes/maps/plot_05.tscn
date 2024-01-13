@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb3o4retuc8n2"]
+
+[ext_resource type="PackedScene" uid="uid://bdanrgiwsifx6" path="res://scenes/maps/Map.tscn" id="1_8edo0"]
+[ext_resource type="Script" path="res://scenes/maps/plot_05.gd" id="2_ed2a4"]
+
+[node name="Plot05" instance=ExtResource("1_8edo0")]
+script = ExtResource("2_ed2a4")

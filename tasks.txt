@@ -1,0 +1,4 @@
+Tasks
+
+- Level selection arrows are not intuitive, according to Geoff. 
+	When only one appears, it looks like it's pointing at the (wrong) selected plot.

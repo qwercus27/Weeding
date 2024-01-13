@@ -1,0 +1,21 @@
+[remap]
+
+importer="font_data_image"
+type="FontFile"
+uid="uid://c2kxr0jo1rvqq"
+path="res://.godot/imported/textAllWhite.png-48134c3f8e4ddf81de131aa09fa56391.fontdata"
+
+[deps]
+
+source_file="res://res/textAllWhite.png"
+dest_files=["res://.godot/imported/textAllWhite.png-48134c3f8e4ddf81de131aa09fa56391.fontdata"]
+
+[params]
+
+character_ranges=PackedStringArray("65-90", "97-122", "48-57", "\'.\'", "\',\'", "\'!\'", "\'?\'", "39", "34", "45", "\'+\'", "\'=\'", "\'/\'", "\'\\\'", "\'%\'", "\'(\'", "\')\'", "\'<\'", "\'>\'", "\' \'")
+columns=79
+rows=1
+image_margin=Rect2i(0, 0, 0, 0)
+character_margin=Rect2i(0, 0, 0, 0)
+fallbacks=[]
+compress=false

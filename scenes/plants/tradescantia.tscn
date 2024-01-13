@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://itdnp6c53kkn"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_sjcdb"]
+[ext_resource type="Script" path="res://scenes/plants/Tradescantia.gd" id="2_0uinq"]
+
+[node name="Tradescantia" instance=ExtResource("1_sjcdb")]
+script = ExtResource("2_0uinq")
+plantName = "Tradescantia"
+plantNumber = 3
+weed = true
+strength = 4
+timerSpeed = 3
+resistance = 2

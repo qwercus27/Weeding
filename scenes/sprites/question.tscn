@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr8cfl8iohj1x"]
+
+[ext_resource type="Texture2D" uid="uid://y7nc8hftnoek" path="res://res/tileSheet.png" id="1_iqqsm"]
+
+[node name="Question" type="Sprite2D"]
+texture = ExtResource("1_iqqsm")
+region_enabled = true
+region_rect = Rect2(112, 48, 16, 32)

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl5psf8a2oid"]
+
+[ext_resource type="PackedScene" uid="uid://ddv6m57g2fxk3" path="res://scenes/plants/plant.tscn" id="1_onllf"]
+[ext_resource type="Script" path="res://scenes/plants/AsclepiasT.gd" id="2_3ufiq"]
+
+[node name="AsclepiasT" instance=ExtResource("1_onllf")]
+script = ExtResource("2_3ufiq")
+plantName = "AsclepiasT"
+plantNumber = 5
+weed = true
+strength = 4
+timerSpeed = 3
+resistance = 3
+perennial = true
